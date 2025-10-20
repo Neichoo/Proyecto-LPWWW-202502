@@ -72,6 +72,14 @@ class PaginatedProducts(BaseModel):
     results: List[ProductOut]
 
 
+# Product detail with related products
+class ProductDetail(ProductOut):
+    related_products: List[ProductOut] = []
+
+    class Config(OrmConfig):
+        pass
+
+
 # Reviews
 class ReviewBase(BaseModel):
     rating: int
@@ -119,6 +127,56 @@ class LogEntryOut(BaseModel):
     user_id: Optional[int]
     payload: Optional[Any]
     created_at: datetime
+
+    class Config(OrmConfig):
+        pass
+
+
+# Cart / Orders
+class CartItemOut(BaseModel):
+    id: int
+    product_id: int
+    name: str
+    price: int
+    quantity: int
+    subtotal: int
+
+    class Config(OrmConfig):
+        pass
+
+
+class CartOut(BaseModel):
+    id: int
+    user_id: int
+    items: List[CartItemOut]
+    subtotal: int
+    shipping: int
+    total: int
+
+    class Config(OrmConfig):
+        pass
+
+
+class AddToCartIn(BaseModel):
+    product_id: int
+    quantity: int
+
+
+class UpdateCartItemIn(BaseModel):
+    quantity: int
+
+
+class OrderItemOut(BaseModel):
+    product: str
+    quantity: int
+
+
+class OrderOut(BaseModel):
+    id: int
+    date: datetime
+    total: int
+    status: str
+    items: List[OrderItemOut]
 
     class Config(OrmConfig):
         pass

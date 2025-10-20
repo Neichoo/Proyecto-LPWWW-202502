@@ -6,6 +6,7 @@ import schemas, crud, auth, models
 from database import SessionLocal
 from fastapi.security import OAuth2PasswordBearer
 from jose import JWTError
+import auth as auth_module
 
 router = APIRouter(prefix="/api", tags=["products"])
 
@@ -22,24 +23,7 @@ oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/auth/login")
 
 
 def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(get_db)):
-    if not token:
-        raise HTTPException(status_code=401, detail="Not authenticated")
-    try:
-        payload = auth.jwt_decode(token)
-    except Exception:
-        # fallback: try direct decode in case helper isn't present
-        try:
-            from jose import jwt
-            payload = jwt.decode(token, auth.SECRET_KEY, algorithms=[auth.ALGORITHM])
-        except JWTError:
-            raise HTTPException(status_code=401, detail="Invalid authentication credentials")
-    username = payload.get("sub")
-    if username is None:
-        raise HTTPException(status_code=401, detail="Invalid authentication credentials")
-    user = crud.get_user_by_username(db, username=username)
-    if not user:
-        raise HTTPException(status_code=401, detail="User not found")
-    return user
+    return auth_module.get_current_user(token=token, db=db)
 
 
 @router.get("/products", response_model=schemas.PaginatedProducts)
@@ -57,14 +41,39 @@ def get_product(product_id: int, db: Session = Depends(get_db)):
     return p
 
 
+@router.get("/categories", response_model=list[schemas.CategoryOut])
+def list_categories(db: Session = Depends(get_db)):
+    return crud.list_categories(db)
+
+
+@router.get("/categories/{slug}/products", response_model=list[schemas.ProductOut])
+def products_by_category(slug: str, db: Session = Depends(get_db)):
+    return crud.list_products_by_category(db, slug)
+
+
+@router.get("/products/{product_id}/detail", response_model=schemas.ProductDetail)
+def product_detail(product_id: int, db: Session = Depends(get_db)):
+    p, related = crud.get_product_detail(db, product_id)
+    if not p:
+        raise HTTPException(status_code=404, detail="Product not found")
+    # attach related products
+    out = schemas.ProductDetail.from_orm(p)
+    out.related_products = [schemas.ProductOut.from_orm(r) for r in related]
+    return out
+
+
 @router.post("/products", response_model=schemas.ProductOut)
-def create_product(product: schemas.ProductCreate, db: Session = Depends(get_db)):
+def create_product(product: schemas.ProductCreate, db: Session = Depends(get_db), current_user: models.User = Depends(get_current_user)):
+    if getattr(current_user, "role", "cliente") != "admin":
+        raise HTTPException(status_code=403, detail="Admin privileges required")
     p = crud.create_product(db, product)
     return p
 
 
 @router.put("/products/{product_id}", response_model=schemas.ProductOut)
-def update_product(product_id: int, changes: dict, db: Session = Depends(get_db)):
+def update_product(product_id: int, changes: dict, db: Session = Depends(get_db), current_user: models.User = Depends(get_current_user)):
+    if getattr(current_user, "role", "cliente") != "admin":
+        raise HTTPException(status_code=403, detail="Admin privileges required")
     p = crud.get_product(db, product_id)
     if not p:
         raise HTTPException(status_code=404, detail="Product not found")
@@ -72,7 +81,9 @@ def update_product(product_id: int, changes: dict, db: Session = Depends(get_db)
 
 
 @router.delete("/products/{product_id}", status_code=204)
-def delete_product(product_id: int, db: Session = Depends(get_db)):
+def delete_product(product_id: int, db: Session = Depends(get_db), current_user: models.User = Depends(get_current_user)):
+    if getattr(current_user, "role", "cliente") != "admin":
+        raise HTTPException(status_code=403, detail="Admin privileges required")
     p = crud.get_product(db, product_id)
     if not p:
         raise HTTPException(status_code=404, detail="Product not found")

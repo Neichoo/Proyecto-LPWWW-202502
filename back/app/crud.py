@@ -46,6 +46,28 @@ def get_product(db: Session, product_id: int):
     return db.query(models.Product).filter(models.Product.id == product_id).first()
 
 
+def list_categories(db: Session):
+    return db.query(models.Category).all()
+
+
+def list_products_by_category(db: Session, slug: str):
+    cat = get_category_by_slug(db, slug)
+    if not cat:
+        return []
+    return db.query(models.Product).filter(models.Product.category_id == cat.id).all()
+
+
+def get_product_detail(db: Session, product_id: int):
+    p = get_product(db, product_id)
+    if not p:
+        return None, []
+    # simple related products: same category, limit 4
+    related = []
+    if p.category_id:
+        related = db.query(models.Product).filter(models.Product.category_id == p.category_id, models.Product.id != p.id).limit(4).all()
+    return p, related
+
+
 def create_product(db: Session, product: schemas.ProductCreate):
     db_prod = models.Product(**product.dict())
     db.add(db_prod)
@@ -97,3 +119,97 @@ def create_log_entry(db: Session, log: schemas.LogEntryIn):
     db.commit()
     db.refresh(obj)
     return obj
+
+
+# Cart / Orders
+def get_or_create_cart(db: Session, user_id: int):
+    cart = db.query(models.Cart).filter(models.Cart.user_id == user_id).first()
+    if cart:
+        return cart
+    cart = models.Cart(user_id=user_id)
+    db.add(cart)
+    db.commit()
+    db.refresh(cart)
+    return cart
+
+
+def add_to_cart(db: Session, user_id: int, product_id: int, quantity: int):
+    cart = get_or_create_cart(db, user_id)
+    prod = get_product(db, product_id)
+    if not prod:
+        return None
+    item = db.query(models.CartItem).filter(models.CartItem.cart_id == cart.id, models.CartItem.product_id == product_id).first()
+    price = prod.price
+    if item:
+        item.quantity += quantity
+        item.subtotal = item.quantity * price
+    else:
+        item = models.CartItem(cart_id=cart.id, product_id=product_id, quantity=quantity, price=price)
+        item.subtotal = quantity * price
+        db.add(item)
+    db.commit()
+    db.refresh(item)
+    return item
+
+
+def get_cart(db: Session, user_id: int):
+    cart = db.query(models.Cart).filter(models.Cart.user_id == user_id).first()
+    if not cart:
+        return None
+    items = db.query(models.CartItem).filter(models.CartItem.cart_id == cart.id).all()
+    subtotal = sum(i.subtotal for i in items)
+    shipping = 3500
+    total = subtotal + shipping
+    return cart, items, subtotal, shipping, total
+
+
+def update_cart_item(db: Session, item_id: int, quantity: int):
+    item = db.query(models.CartItem).filter(models.CartItem.id == item_id).first()
+    if not item:
+        return None
+    item.quantity = quantity
+    item.subtotal = item.quantity * item.price
+    db.add(item)
+    db.commit()
+    db.refresh(item)
+    return item
+
+
+def remove_cart_item(db: Session, item_id: int):
+    item = db.query(models.CartItem).filter(models.CartItem.id == item_id).first()
+    if not item:
+        return False
+    db.delete(item)
+    db.commit()
+    return True
+
+
+def clear_cart(db: Session, user_id: int):
+    cart = db.query(models.Cart).filter(models.Cart.user_id == user_id).first()
+    if not cart:
+        return False
+    db.query(models.CartItem).filter(models.CartItem.cart_id == cart.id).delete()
+    db.commit()
+    return True
+
+
+def create_order_from_cart(db: Session, user_id: int, payment_info: dict):
+    cart_info = get_cart(db, user_id)
+    if not cart_info:
+        return None
+    cart, items, subtotal, shipping, total = cart_info
+    order = models.Order(user_id=user_id, subtotal=subtotal, shipping=shipping, total=total, status="paid", payment_reference="SIMULATED")
+    db.add(order)
+    db.commit()
+    db.refresh(order)
+    for it in items:
+        oi = models.OrderItem(order_id=order.id, product_id=it.product_id, name=(get_product(db, it.product_id).title if get_product(db, it.product_id) else ""), price=it.price, quantity=it.quantity, subtotal=it.subtotal)
+        db.add(oi)
+    db.commit()
+    # clear cart
+    clear_cart(db, user_id)
+    return order
+
+
+def list_orders(db: Session, user_id: int):
+    return db.query(models.Order).filter(models.Order.user_id == user_id).all()

@@ -1,6 +1,9 @@
 fastapi
-uvicorn
+uvicorn[standard]
 SQLAlchemy
 pydantic
 pydantic[email]
 psycopg2-binary
+passlib[bcrypt]
+python-jose[cryptography]
+python-multipart

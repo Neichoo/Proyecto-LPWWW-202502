@@ -67,3 +67,11 @@ def clear(db: Session = Depends(get_db), current_user: models.User = Depends(aut
     if not ok:
         raise HTTPException(status_code=404, detail="Cart not found")
     return {"message": "Carrito vacío"}
+
+
+@router.put("/payment-method", response_model=dict)
+def set_payment_method(payload: schemas.CartPaymentMethodIn, db: Session = Depends(get_db), current_user: models.User = Depends(auth_module.get_current_user)):
+    ok = crud.update_order_payment_method(db, current_user.id, payload.method)
+    if not ok:
+        raise HTTPException(status_code=400, detail="Could not set payment method")
+    return {"message": "Método de pago actualizado", "method": payload.method}

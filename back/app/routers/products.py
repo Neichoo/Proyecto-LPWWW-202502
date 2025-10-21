@@ -51,6 +51,34 @@ def products_by_category(slug: str, db: Session = Depends(get_db)):
     return crud.list_products_by_category(db, slug)
 
 
+@router.post("/categories", response_model=schemas.CategoryOut)
+def create_category(cat: schemas.CategoryCreate, db: Session = Depends(get_db), current_user: models.User = Depends(get_current_user)):
+    if getattr(current_user, "role", "cliente") != "admin":
+        raise HTTPException(status_code=403, detail="Admin privileges required")
+    return crud.create_category(db, cat)
+
+
+@router.put("/categories/{category_id}", response_model=schemas.CategoryOut)
+def update_category(category_id: int, changes: schemas.CategoryUpdate, db: Session = Depends(get_db), current_user: models.User = Depends(get_current_user)):
+    if getattr(current_user, "role", "cliente") != "admin":
+        raise HTTPException(status_code=403, detail="Admin privileges required")
+    cat = db.query(models.Category).filter(models.Category.id == category_id).first()
+    if not cat:
+        raise HTTPException(status_code=404, detail="Category not found")
+    return crud.update_category(db, cat, changes.dict())
+
+
+@router.delete("/categories/{category_id}", status_code=204)
+def delete_category(category_id: int, db: Session = Depends(get_db), current_user: models.User = Depends(get_current_user)):
+    if getattr(current_user, "role", "cliente") != "admin":
+        raise HTTPException(status_code=403, detail="Admin privileges required")
+    cat = db.query(models.Category).filter(models.Category.id == category_id).first()
+    if not cat:
+        raise HTTPException(status_code=404, detail="Category not found")
+    crud.delete_category(db, cat)
+    return None
+
+
 @router.get("/products/{product_id}/detail", response_model=schemas.ProductDetail)
 def product_detail(product_id: int, db: Session = Depends(get_db)):
     p, related = crud.get_product_detail(db, product_id)
@@ -99,3 +127,25 @@ def list_reviews(product_id: int, db: Session = Depends(get_db)):
 @router.post("/products/{product_id}/reviews", response_model=schemas.ReviewOut)
 def create_review(product_id: int, review: schemas.ReviewCreate, db: Session = Depends(get_db), current_user: models.User = Depends(get_current_user)):
     return crud.create_review(db, product_id, current_user.id, review)
+
+
+@router.put("/products/{product_id}/reviews/{review_id}", response_model=schemas.ReviewOut)
+def update_review(product_id: int, review_id: int, changes: schemas.ReviewUpdate, db: Session = Depends(get_db), current_user: models.User = Depends(get_current_user)):
+    rev = crud.get_review(db, review_id)
+    if not rev or rev.product_id != product_id:
+        raise HTTPException(status_code=404, detail="Review not found")
+    # only owner or admin
+    if rev.user_id != current_user.id and getattr(current_user, "role", "cliente") != "admin":
+        raise HTTPException(status_code=403, detail="Not allowed")
+    return crud.update_review(db, rev, changes.dict())
+
+
+@router.delete("/products/{product_id}/reviews/{review_id}", status_code=204)
+def delete_review(product_id: int, review_id: int, db: Session = Depends(get_db), current_user: models.User = Depends(get_current_user)):
+    rev = crud.get_review(db, review_id)
+    if not rev or rev.product_id != product_id:
+        raise HTTPException(status_code=404, detail="Review not found")
+    if rev.user_id != current_user.id and getattr(current_user, "role", "cliente") != "admin":
+        raise HTTPException(status_code=403, detail="Not allowed")
+    crud.delete_review(db, rev)
+    return None

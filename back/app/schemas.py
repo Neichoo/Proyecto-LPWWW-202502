@@ -60,6 +60,16 @@ class ProductCreate(ProductBase):
     pass
 
 
+class CategoryCreate(BaseModel):
+    name: str
+    slug: str
+
+
+class CategoryUpdate(BaseModel):
+    name: str | None = None
+    slug: str | None = None
+
+
 class ProductOut(ProductBase):
     id: int
 
@@ -87,6 +97,10 @@ class ReviewBase(BaseModel):
 
 
 class ReviewCreate(ReviewBase):
+    pass
+
+
+class ReviewUpdate(ReviewBase):
     pass
 
 
@@ -180,3 +194,51 @@ class OrderOut(BaseModel):
 
     class Config(OrmConfig):
         pass
+
+
+# Shipping / Contact / Payment
+class ShippingItem(BaseModel):
+    product_id: int
+    quantity: int
+
+
+class ShippingCalcIn(BaseModel):
+    postal_code: str
+    items: List[ShippingItem]
+
+
+class ShippingCalcOut(BaseModel):
+    shipping_cost: int
+    estimated_days: int
+
+
+class ContactIn(BaseModel):
+    nombre: str
+    apellido: Optional[str]
+    email: EmailStr
+    mensaje: str
+
+
+class CartPaymentMethodIn(BaseModel):
+    method: str
+
+
+class OrderDetailOut(BaseModel):
+    id: int
+    total: int
+    status: str
+    payment_method: Optional[str]
+    created_at: datetime
+    items: List[dict]
+
+    class Config(OrmConfig):
+        pass
+
+
+class TrackOut(BaseModel):
+    order_id: int
+    status: str
+    last_update: datetime
+    estimated_delivery: str
+    items: List[dict]
+

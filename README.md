@@ -8,7 +8,7 @@
 - - **API Contract** [Ver aquí](https://github.com/Neichoo/Proyecto-LPWWW-202502/wiki/Api-Contract)
 - - **Diagrama de Clases [Ver aquí](https://github.com/Neichoo/Proyecto-LPWWW-202502/wiki/Diagrama-de-Clases)**
 - - **Diagrama de Componentes [Ver aquí](https://github.com/Neichoo/Proyecto-LPWWW-202502/wiki/Diagrama-de-Componentes)**
-  - - - **Video de presentación** [Ver aquí](https://youtu.be/kBMc-OtHQiI)
+- - **Video de presentación** [Ver aquí](https://youtu.be/kBMc-OtHQiI)
 
 
 # Buildear y levantar

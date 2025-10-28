@@ -4,8 +4,7 @@ from datetime import datetime
 
 
 class OrmConfig:
-    orm_mode = True
-
+    from_attributes = True
 
 class UserBase(BaseModel):
     username: str

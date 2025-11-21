@@ -1,6 +1,6 @@
 import { ShoppingCartIcon } from "lucide-react";
-import React from "react";
 import { Button } from "../../../../components/ui/button";
+import { Link } from "react-router-dom";
 
 const navItems = [
   { label: "Menú" },
@@ -32,17 +32,20 @@ export const NavbarSection = (): JSX.Element => {
           </button>
 
           {navItems.map((item, index) => (
-            <button
+            <Link
               key={index}
+              to={item.label === 'Locales' ? '/locales' : item.label === 'Menú' ? '/#menu' : '/#contact'}
               className="[font-family:'Inter',Helvetica] font-medium text-[#fefdfe] text-[29.3px] tracking-[0] leading-[44px] transition-opacity hover:opacity-80"
             >
               {item.label}
-            </button>
+            </Link>
           ))}
 
-          <Button className="h-auto bg-[#27686b] hover:bg-[#1f5457] text-[#fefdfe] px-[35.19px] py-[20.53px] rounded-[11.73px] shadow-[0px_1.47px_2.93px_#0000000d] [font-family:'Inter',Helvetica] font-medium text-[23.5px] leading-[35.2px] transition-transform hover:scale-105">
-            Login
-          </Button>
+          <Link to="/login">
+            <Button className="h-auto bg-[#27686b] hover:bg-[#1f5457] text-[#fefdfe] px-[35.19px] py-[20.53px] rounded-[11.73px] shadow-[0px_1.47px_2.93px_#0000000d] [font-family:'Inter',Helvetica] font-medium text-[23.5px] leading-[35.2px] transition-transform hover:scale-105">
+              Login
+            </Button>
+          </Link>
         </div>
       </div>
     </nav>

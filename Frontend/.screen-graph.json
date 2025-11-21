@@ -1,4 +1,87 @@
 {
-  "nodes": [],
-  "edges": []
+  "nodes": [
+    {
+      "id": "src/screens/LandingPage/LandingPage.tsx",
+      "label": "LandingPage",
+      "routes": [
+        "/"
+      ],
+      "dataModelId": "3:391",
+      "isRoot": true
+    },
+    {
+      "id": "src/screens/Login/Login.tsx",
+      "label": "Login",
+      "routes": [
+        "/login"
+      ],
+      "dataModelId": "99:1027"
+    },
+    {
+      "id": "src/screens/SignUp/SignUp.tsx",
+      "label": "SignUp",
+      "routes": [
+        "/signup"
+      ],
+      "dataModelId": "98:977"
+    },
+    {
+      "id": "src/screens/Locales/Locales.tsx",
+      "label": "Locales",
+      "routes": [
+        "/locales"
+      ],
+      "dataModelId": "3:192"
+    }
+  ],
+  "edges": [
+    {
+      "id": "src\\screens\\LandingPage\\sections\\NavbarSection\\NavbarSection.tsx:44:10-to-src\\screens\\Login\\Login.tsx",
+      "source": "src\\screens\\LandingPage\\LandingPage.tsx",
+      "target": "src\\screens\\Login\\Login.tsx",
+      "data": {
+        "viaRoute": "/login",
+        "trigger": {
+          "element": "<Link to=\"/login\">\r\n            <Button className=\"h-auto bg-[#27686b] hover:bg-[#1f5457] text-[#fefdfe] px-[35.19px] py-[20.53px] rounded-[11.73px] shadow-[0px_1.47px_2.93px_#0000000d] [font-family:'Inter',Helvetica] font-medium text-[23.5px] leading-[35.2px] transition-transform hover:scale-105\">\r\n              Login\r\n            </Button>\r\n          </Link>",
+          "line": 44,
+          "endLine": 48,
+          "column": 10,
+          "endColumn": 17,
+          "sourceFile": "src\\screens\\LandingPage\\sections\\NavbarSection\\NavbarSection.tsx"
+        }
+      }
+    },
+    {
+      "id": "src\\screens\\Login\\Login.tsx:79:10-to-src\\screens\\SignUp\\SignUp.tsx",
+      "source": "src\\screens\\Login\\Login.tsx",
+      "target": "src\\screens\\SignUp\\SignUp.tsx",
+      "data": {
+        "viaRoute": "/signup",
+        "trigger": {
+          "element": "<Link to=\"/signup\">\r\n            <Button className=\"h-auto bg-[#27686b] hover:bg-[#1f5558] rounded-[11.73px] shadow-[0px_1.47px_2.93px_#0000000d] px-[35.19px] py-[20.53px] [font-family:'Inter',Helvetica] font-medium text-[#fefdfe] text-[23.5px] leading-[35.2px]\">\r\n              Login\r\n            </Button>\r\n          </Link>",
+          "line": 79,
+          "endLine": 83,
+          "column": 10,
+          "endColumn": 17,
+          "sourceFile": "src\\screens\\Login\\Login.tsx"
+        }
+      }
+    },
+    {
+      "id": "src\\screens\\SignUp\\sections\\NavbarSection\\NavbarSection.tsx:44:10-to-src\\screens\\Login\\Login.tsx",
+      "source": "src\\screens\\SignUp\\SignUp.tsx",
+      "target": "src\\screens\\Login\\Login.tsx",
+      "data": {
+        "viaRoute": "/login",
+        "trigger": {
+          "element": "<Link to=\"/login\">\r\n            <Button className=\"bg-[#27686b] hover:bg-[#1f5457] text-[#fefdfe] rounded-[11.73px] shadow-[0px_1.47px_2.93px_#0000000d] px-[35.19px] py-[20.53px] h-auto transition-colors\">\r\n              <span className=\"[font-family:'Inter',Helvetica] font-medium text-[23.5px] tracking-[0] leading-[35.2px]\">\r\n                Login\r\n              </span>\r\n            </Button>\r\n          </Link>",
+          "line": 44,
+          "endLine": 50,
+          "column": 10,
+          "endColumn": 17,
+          "sourceFile": "src\\screens\\SignUp\\sections\\NavbarSection\\NavbarSection.tsx"
+        }
+      }
+    }
+  ]
 }

@@ -7,6 +7,42 @@ import { Label } from "../../../../components/ui/label";
 
 export const SignUpSection = (): JSX.Element => {
   const [showPassword, setShowPassword] = useState(false);
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const handleSignUp = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError(null);
+    if (!email || !password || !firstName) {
+      setError('Please fill required fields');
+      return;
+    }
+    setLoading(true);
+    try {
+      const payload = {
+        username: email.split('@')[0],
+        email,
+        full_name: `${firstName} ${lastName}`.trim(),
+        password,
+      };
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/register`, {
+        method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload)
+      });
+      if (res.ok) {
+        // on success redirect to login or store token
+        window.location.href = '/login';
+      } else {
+        const data = await res.json();
+        setError(data.detail || 'Registration failed');
+      }
+    } catch (err) {
+      setError(String(err));
+    } finally { setLoading(false); }
+  };
 
   return (
     <section className="w-full flex justify-center py-16 px-4 translate-y-[-1rem] animate-fade-in opacity-0">
@@ -22,14 +58,14 @@ export const SignUpSection = (): JSX.Element => {
                 <Label className="[font-family:'Poppins',Helvetica] font-normal text-[#666666] text-[21.3px] leading-normal">
                   First name
                 </Label>
-                <Input className="h-[74.67px] rounded-2xl border-[1.33px] border-[#66666659]" />
+                <Input value={firstName} onChange={(e) => setFirstName(e.target.value)} className="h-[74.67px] rounded-2xl border-[1.33px] border-[#66666659]" />
               </div>
 
               <div className="flex flex-col gap-[5.33px]">
                 <Label className="[font-family:'Poppins',Helvetica] font-normal text-[#666666] text-[21.3px] leading-normal">
                   Last name
                 </Label>
-                <Input className="h-[74.67px] rounded-2xl border-[1.33px] border-[#66666659]" />
+                <Input value={lastName} onChange={(e) => setLastName(e.target.value)} className="h-[74.67px] rounded-2xl border-[1.33px] border-[#66666659]" />
               </div>
             </div>
 
@@ -37,7 +73,7 @@ export const SignUpSection = (): JSX.Element => {
               <Label className="[font-family:'Poppins',Helvetica] font-normal text-[#666666] text-[21.3px] leading-normal">
                 Email address
               </Label>
-              <Input className="h-[74.67px] rounded-2xl border-[1.33px] border-[#66666659]" />
+              <Input value={email} onChange={(e) => setEmail(e.target.value)} className="h-[74.67px] rounded-2xl border-[1.33px] border-[#66666659]" />
             </div>
 
             <div className="flex flex-col gap-[5.33px]">
@@ -95,6 +131,8 @@ export const SignUpSection = (): JSX.Element => {
               </div>
               <Input
                 type={showPassword ? "text" : "password"}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 className="h-[74.67px] rounded-2xl border-[1.33px] border-[#66666659]"
               />
               <p className="[font-family:'Poppins',Helvetica] font-normal text-[#666666] text-[18.7px] leading-normal">
@@ -134,14 +172,18 @@ export const SignUpSection = (): JSX.Element => {
           </div>
 
           <div className="flex items-center gap-8">
-            <Button
-              disabled
-              className="h-[85.33px] px-[56px] bg-[#111111] rounded-[53.33px] opacity-25 hover:opacity-25"
-            >
-              <span className="[font-family:'Poppins',Helvetica] font-medium text-white text-[29.3px] leading-normal">
-                Sign up
-              </span>
-            </Button>
+            <form onSubmit={handleSignUp} className="flex items-center gap-8">
+              {error && <div className="text-red-600 mr-4">{error}</div>}
+              <Button
+                type="submit"
+                disabled={loading || !email || !password || !firstName}
+                className={`h-[85.33px] px-[56px] bg-[#111111] rounded-[53.33px] hover:opacity-90 [font-family:'Poppins',Helvetica] font-medium text-white text-[29.3px] leading-normal ${loading || !email || !password || !firstName ? 'opacity-50' : ''}`}
+              >
+                <span className="[font-family:'Poppins',Helvetica] font-medium text-white text-[29.3px] leading-normal">
+                  {loading ? 'Signing up...' : 'Sign up'}
+                </span>
+              </Button>
+            </form>
 
             <p className="[font-family:'Poppins',Helvetica] font-normal text-base leading-normal">
               <span className="text-[#333333]">Already have an account? </span>

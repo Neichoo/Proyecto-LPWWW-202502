@@ -18,10 +18,21 @@ import { createRoot } from "react-dom/client";
 
 
 import { LandingPage } from "./screens/LandingPage";
+import { Login } from "./screens/Login";
+import { SignUp } from "./screens/SignUp";
+import { Locales } from "./screens/Locales";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 createRoot(document.getElementById("app") as HTMLElement).render(
   <StrictMode>
-    <LandingPage />
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<SignUp />} />
+        <Route path="/locales" element={<Locales />} />
+      </Routes>
+    </BrowserRouter>
   </StrictMode>,
 );
 

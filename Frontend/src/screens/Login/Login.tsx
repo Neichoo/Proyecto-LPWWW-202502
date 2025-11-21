@@ -1,9 +1,11 @@
 import { EyeIcon, EyeOffIcon, ShoppingCartIcon } from "lucide-react";
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "../../components/ui/button";
+import { Link } from "react-router-dom";
 import { Checkbox } from "../../components/ui/checkbox";
 import { Input } from "../../components/ui/input";
 import { Label } from "../../components/ui/label";
+import { postFormUrlEncoded } from "../../lib/api";
 
 const navigationItems = [
   { label: "Menú" },
@@ -13,6 +15,30 @@ const navigationItems = [
 
 export const Login = (): JSX.Element => {
   const [showPassword, setShowPassword] = React.useState(false);
+  const [usernameOrEmail, setUsernameOrEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError(null);
+    setLoading(true);
+    try {
+      // backend login uses OAuth2 form with username & password
+      const resp = await postFormUrlEncoded('/api/auth/login', { username: usernameOrEmail, password });
+      if (resp.ok) {
+        // store token
+        localStorage.setItem('token', resp.data.access_token);
+        // redirect to home
+        window.location.href = '/';
+      } else {
+        setError((resp.data && resp.data.detail) || 'Login failed');
+      }
+    } catch (err) {
+      setError(String(err));
+    } finally { setLoading(false); }
+  };
 
   return (
     <div
@@ -50,9 +76,11 @@ export const Login = (): JSX.Element => {
             </Button>
           ))}
 
-          <Button className="h-auto bg-[#27686b] hover:bg-[#1f5558] rounded-[11.73px] shadow-[0px_1.47px_2.93px_#0000000d] px-[35.19px] py-[20.53px] [font-family:'Inter',Helvetica] font-medium text-[#fefdfe] text-[23.5px] leading-[35.2px]">
-            Login
-          </Button>
+          <Link to="/signup">
+            <Button className="h-auto bg-[#27686b] hover:bg-[#1f5558] rounded-[11.73px] shadow-[0px_1.47px_2.93px_#0000000d] px-[35.19px] py-[20.53px] [font-family:'Inter',Helvetica] font-medium text-[#fefdfe] text-[23.5px] leading-[35.2px]">
+              Login
+            </Button>
+          </Link>
         </nav>
       </header>
 
@@ -76,6 +104,8 @@ export const Login = (): JSX.Element => {
                     <Input
                       id="email"
                       type="text"
+                      value={usernameOrEmail}
+                      onChange={(e) => setUsernameOrEmail(e.target.value)}
                       className="h-[75.37px] rounded-[16.15px] border-[1.35px] border-[#66666659]"
                     />
                   </div>
@@ -108,6 +138,8 @@ export const Login = (): JSX.Element => {
                       <Input
                         id="password"
                         type={showPassword ? "text" : "password"}
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
                         className="h-[75.37px] rounded-[16.15px] border-[1.35px] border-[#66666659]"
                       />
                     </div>
@@ -140,12 +172,16 @@ export const Login = (): JSX.Element => {
                       </a>
                     </p>
 
-                    <Button
-                      disabled
-                      className="h-[86.13px] w-full bg-[#111111] hover:bg-[#111111] rounded-[43.07px] opacity-25 [font-family:'Poppins',Helvetica] font-medium text-white text-[29.6px]"
-                    >
-                      Log in
-                    </Button>
+                    <form onSubmit={handleLogin} className="w-full">
+                      {error && <div className="text-red-600 mb-2">{error}</div>}
+                      <Button
+                        type="submit"
+                        disabled={loading || !usernameOrEmail || !password}
+                        className={`h-[86.13px] w-full bg-[#111111] hover:bg-[#111111] rounded-[43.07px] [font-family:'Poppins',Helvetica] font-medium text-white text-[29.6px] ${loading || !usernameOrEmail || !password ? 'opacity-50' : ''}`}
+                      >
+                        {loading ? 'Logging in...' : 'Log in'}
+                      </Button>
+                    </form>
                   </div>
                 </div>
               </div>

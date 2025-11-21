@@ -1,6 +1,6 @@
 import { ShoppingCartIcon } from "lucide-react";
-import React from "react";
 import { Button } from "../../../../components/ui/button";
+import { Link } from "react-router-dom";
 
 const navLinks = [
   { label: "Menú", href: "#menu" },
@@ -32,20 +32,22 @@ export const NavbarSection = (): JSX.Element => {
           </button>
 
           {navLinks.map((link, index) => (
-            <a
+            <Link
               key={index}
-              href={link.href}
+              to={link.href === '#locales' ? '/locales' : '/'}
               className="[font-family:'Inter',Helvetica] font-medium text-[#fefdfe] text-[29.3px] tracking-[0] leading-[44px] transition-opacity hover:opacity-80"
             >
               {link.label}
-            </a>
+            </Link>
           ))}
 
-          <Button className="bg-[#27686b] hover:bg-[#1f5457] text-[#fefdfe] rounded-[11.73px] shadow-[0px_1.47px_2.93px_#0000000d] px-[35.19px] py-[20.53px] h-auto transition-colors">
-            <span className="[font-family:'Inter',Helvetica] font-medium text-[23.5px] tracking-[0] leading-[35.2px]">
-              Login
-            </span>
-          </Button>
+          <Link to="/login">
+            <Button className="bg-[#27686b] hover:bg-[#1f5457] text-[#fefdfe] rounded-[11.73px] shadow-[0px_1.47px_2.93px_#0000000d] px-[35.19px] py-[20.53px] h-auto transition-colors">
+              <span className="[font-family:'Inter',Helvetica] font-medium text-[23.5px] tracking-[0] leading-[35.2px]">
+                Login
+              </span>
+            </Button>
+          </Link>
         </div>
       </div>
     </nav>

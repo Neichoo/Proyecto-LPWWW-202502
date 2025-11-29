@@ -1,5 +1,6 @@
 import React from "react";
 import { Button } from "../../components/ui/button";
+import { Link } from "react-router-dom";
 
 const adminButtons = [
   { id: 1, label: "Administrar Productos" },
@@ -30,14 +31,16 @@ export const Admin = (): JSX.Element => {
     >
       <header className="w-full h-[100px] bg-[#ca2b4b] flex items-center justify-between px-20">
         <div className="flex items-center gap-4">
-          <img
-            className="w-[135px] h-[100px] rounded-[50.59px] object-cover"
-            alt="Icono"
-            src="https://c.animaapp.com/mgy9tilnfTD9CM/img/icono-1.png"
-          />
-          <h1 className="[font-family:'Roboto',Helvetica] font-medium text-[#fefdfe] text-[32px] leading-[48px]">
-            Fukusuke
-          </h1>
+          <Link to="/" className="flex items-center gap-3">
+            <img
+              className="w-[135px] h-[100px] rounded-[50.59px] object-cover"
+              alt="Icono"
+              src="https://c.animaapp.com/mgy9tilnfTD9CM/img/icono-1.png"
+            />
+            <h1 className="[font-family:'Roboto',Helvetica] font-medium text-[#fefdfe] text-[32px] leading-[48px]">
+              Fukusuke
+            </h1>
+          </Link>
         </div>
 
         <Button className="h-auto gap-[11.73px] px-[35.19px] py-[20.53px] bg-[#27686b] rounded-[11.73px] shadow-[0px_1.47px_2.93px_#0000000d] hover:bg-[#1f5558] transition-colors">

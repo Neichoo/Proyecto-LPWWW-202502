@@ -7,10 +7,10 @@ import { Input } from "../../components/ui/input";
 import { Label } from "../../components/ui/label";
 import { postFormUrlEncoded } from "../../lib/api";
 
-const navigationItems = [
-  { label: "Menú" },
-  { label: "Locales" },
-  { label: "Contacto" },
+  const navigationItems = [
+  { label: "Menú", to: "/" },
+  { label: "Locales", to: "/locales" },
+  { label: "Contacto", to: "/contacto" },
 ];
 
 export const Login = (): JSX.Element => {
@@ -47,33 +47,39 @@ export const Login = (): JSX.Element => {
     >
       <header className="w-full h-[100px] bg-[#ca2b4b] flex items-center justify-between px-[81px] translate-y-[-1rem] animate-fade-in opacity-0">
         <div className="flex items-center gap-[13px]">
-          <img
-            className="w-[135px] h-[100px] rounded-[50.59px] object-cover"
-            alt="Icono"
-            src="https://c.animaapp.com/mi7thhexUlRvcK/img/icono-1.png"
-          />
-          <h1 className="[font-family:'Inter',Helvetica] font-medium text-[#fefdfe] text-[32px] leading-[48px] whitespace-nowrap">
-            Fukusuke
-          </h1>
+          <Link to="/" className="flex items-center gap-3">
+            <img
+              className="w-[135px] h-[100px] rounded-[50.59px] object-cover"
+              alt="Icono"
+              src="https://c.animaapp.com/mi7thhexUlRvcK/img/icono-1.png"
+            />
+            <h1 className="[font-family:'Inter',Helvetica] font-medium text-[#fefdfe] text-[32px] leading-[48px] whitespace-nowrap">
+              Fukusuke
+            </h1>
+          </Link>
         </div>
 
         <nav className="flex items-center gap-[70.38px]">
-          <Button
-            variant="ghost"
-            size="icon"
-            className="h-auto w-auto p-0 hover:bg-transparent"
-          >
-            <ShoppingCartIcon className="w-[43.99px] h-[43.99px] text-[#fefdfe]" />
-          </Button>
+          <Link to="/carrito" className="h-auto w-auto p-0">
+            <Button
+              variant="ghost"
+              size="icon"
+              className="h-auto w-auto p-0 hover:bg-transparent"
+              aria-label="Shopping cart"
+            >
+              <ShoppingCartIcon className="w-[43.99px] h-[43.99px] text-[#fefdfe]" />
+            </Button>
+          </Link>
 
           {navigationItems.map((item, index) => (
-            <Button
-              key={index}
-              variant="ghost"
-              className="h-auto px-0 py-0 hover:bg-transparent [font-family:'Inter',Helvetica] font-medium text-[#fefdfe] text-[29.3px] leading-[44px]"
-            >
-              {item.label}
-            </Button>
+            <Link key={index} to={item.to} className="h-auto px-0 py-0">
+              <Button
+                variant="ghost"
+                className="h-auto px-0 py-0 hover:bg-transparent [font-family:'Inter',Helvetica] font-medium text-[#fefdfe] text-[29.3px] leading-[44px]"
+              >
+                {item.label}
+              </Button>
+            </Link>
           ))}
 
           <Link to="/signup">
@@ -198,12 +204,14 @@ export const Login = (): JSX.Element => {
                   <span className="text-[#666666]">
                     Don&apos;t have an acount?{" "}
                   </span>
-                  <Button
-                    variant="link"
-                    className="h-auto p-0 [font-family:'Roboto',Helvetica] font-medium text-[#111111] text-[21.5px] leading-normal underline"
-                  >
-                    Sign up
-                  </Button>
+                  <Link to="/signup">
+                    <Button
+                      variant="link"
+                      className="h-auto p-0 [font-family:'Roboto',Helvetica] font-medium text-[#111111] text-[21.5px] leading-normal underline"
+                    >
+                      Sign up
+                    </Button>
+                  </Link>
                 </p>
               </div>
             </div>

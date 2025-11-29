@@ -1,6 +1,7 @@
 import { ChevronDownIcon, EyeIcon, EyeOffIcon } from "lucide-react";
 import React, { useState } from "react";
 import { Button } from "../../../../components/ui/button";
+import { Link } from "react-router-dom";
 import { Checkbox } from "../../../../components/ui/checkbox";
 import { Input } from "../../../../components/ui/input";
 import { Label } from "../../../../components/ui/label";
@@ -187,9 +188,9 @@ export const SignUpSection = (): JSX.Element => {
 
             <p className="[font-family:'Poppins',Helvetica] font-normal text-base leading-normal">
               <span className="text-[#333333]">Already have an account? </span>
-              <button className="text-[#111111] underline transition-opacity hover:opacity-80">
+              <Link to="/login" className="text-[#111111] underline transition-opacity hover:opacity-80">
                 Log in
-              </button>
+              </Link>
             </p>
           </div>
         </div>

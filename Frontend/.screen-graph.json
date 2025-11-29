@@ -32,6 +32,54 @@
         "/locales"
       ],
       "dataModelId": "3:192"
+    },
+    {
+      "id": "src/screens/Despacho/Despacho.tsx",
+      "label": "Despacho",
+      "routes": [
+        "/despacho"
+      ],
+      "dataModelId": "46:443"
+    },
+    {
+      "id": "src/screens/Contacto/Contacto.tsx",
+      "label": "Contacto",
+      "routes": [
+        "/contacto"
+      ],
+      "dataModelId": "3:118"
+    },
+    {
+      "id": "src/screens/Admin/Admin.tsx",
+      "label": "Admin",
+      "routes": [
+        "/admin"
+      ],
+      "dataModelId": "141:1152"
+    },
+    {
+      "id": "src/screens/AdministradorCompras/Administrador.tsx",
+      "label": "Administrador",
+      "routes": [
+        "/administrador"
+      ],
+      "dataModelId": "47:966"
+    },
+    {
+      "id": "src/screens/CajaOnline/CajaOnline.tsx",
+      "label": "CajaOnline",
+      "routes": [
+        "/caja-online"
+      ],
+      "dataModelId": "135:1164"
+    },
+    {
+      "id": "src/screens/CarritoDeCompras/CarritoDeCompras.tsx",
+      "label": "CarritoDeCompras",
+      "routes": [
+        "/carrito"
+      ],
+      "dataModelId": "117:1083"
     }
   ],
   "edges": [

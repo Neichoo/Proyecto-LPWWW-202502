@@ -1,5 +1,6 @@
 import React from "react";
 import { Button } from "../../../../components/ui/button";
+import { Link } from "react-router-dom";
 
 const navigationItems = [
   { label: "Administrar Usuarios", isActive: false },
@@ -12,14 +13,16 @@ export const NavigationBarSection = (): JSX.Element => {
     <header className="w-full h-[100px] bg-[#ca2b4b] translate-y-[-1rem] animate-fade-in opacity-0">
       <nav className="flex items-center justify-between h-full px-20">
         <div className="flex items-center gap-6">
-          <img
-            className="w-[135px] h-[101px] rounded-[50.59px] object-cover"
-            alt="Icono"
-            src="https://c.animaapp.com/mi7tfxh9pOq0lK/img/icono-1.png"
-          />
-          <div className="flex items-center justify-center [font-family:'Roboto',Helvetica] font-medium text-[#fefdfe] text-[32px] tracking-[0] leading-[48px] whitespace-nowrap">
-            Fukusuke
-          </div>
+          <Link to="/" className="flex items-center gap-3">
+            <img
+              className="w-[135px] h-[101px] rounded-[50.59px] object-cover"
+              alt="Icono"
+              src="https://c.animaapp.com/mi7tfxh9pOq0lK/img/icono-1.png"
+            />
+            <div className="flex items-center justify-center [font-family:'Roboto',Helvetica] font-medium text-[#fefdfe] text-[32px] tracking-[0] leading-[48px] whitespace-nowrap">
+              Fukusuke
+            </div>
+          </Link>
         </div>
 
         <div className="flex items-center gap-[50px]">

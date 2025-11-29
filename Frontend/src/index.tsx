@@ -21,6 +21,14 @@ import { LandingPage } from "./screens/LandingPage";
 import { Login } from "./screens/Login";
 import { SignUp } from "./screens/SignUp";
 import { Locales } from "./screens/Locales";
+import { ProductDetailPage } from "./screens/Productos/Productos";
+import { Despacho } from "./screens/Despacho/Despacho";
+import { Contacto } from "./screens/Contacto/Contacto";
+import { Admin } from "./screens/Admin/Admin";
+import { Administrador } from "./screens/Administrador/Administrador";
+import { Administrador as AdministradorCompras } from "./screens/AdministradorCompras/Administrador";
+import { CajaOnline } from "./screens/CajaOnline/CajaOnline";
+import { CarritoDeCompras } from "./screens/CarritoDeCompras/CarritoDeCompras";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 createRoot(document.getElementById("app") as HTMLElement).render(
@@ -31,6 +39,15 @@ createRoot(document.getElementById("app") as HTMLElement).render(
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/locales" element={<Locales />} />
+        <Route path="/productos" element={<ProductDetailPage />} />
+        <Route path="/productos/:id" element={<ProductDetailPage />} />
+        <Route path="/despacho" element={<Despacho />} />
+        <Route path="/contacto" element={<Contacto />} />
+        <Route path="/admin" element={<Admin />} />
+        <Route path="/administrador" element={<Administrador />} />
+        <Route path="/administrador-compras" element={<AdministradorCompras />} />
+        <Route path="/caja-online" element={<CajaOnline />} />
+        <Route path="/carrito" element={<CarritoDeCompras />} />
       </Routes>
     </BrowserRouter>
   </StrictMode>,

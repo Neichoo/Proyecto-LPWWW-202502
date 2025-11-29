@@ -51,6 +51,9 @@
   --single-line-body-base-font-weight: 400;
   --single-line-body-base-letter-spacing: 0px;
   --single-line-body-base-line-height: 100%;
+
+  /* common utility */
+  --animate-spin: spin 1s linear infinite;
 }
 
 
@@ -231,9 +234,7 @@
 
     --radius: 0.5rem;
   }
-}
 
-@layer base {
   * {
     @apply border-border;
   }

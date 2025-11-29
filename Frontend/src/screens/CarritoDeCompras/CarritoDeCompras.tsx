@@ -1,5 +1,5 @@
 import { ArrowLeftIcon, ChevronRightIcon, Trash2Icon } from "lucide-react";
-import React from "react";
+import { Link } from "react-router-dom";
 import { Button } from "../../components/ui/button";
 import { Card, CardContent } from "../../components/ui/card";
 import { Input } from "../../components/ui/input";
@@ -48,15 +48,12 @@ export const CarritoDeCompras = (): JSX.Element => {
     >
       <div className="flex gap-8 max-w-[1133px] w-full">
         <section className="flex-1 min-w-[608px] translate-y-[-1rem] animate-fade-in opacity-0 [--animation-delay:200ms]">
-          <Button
-            variant="ghost"
-            className="mb-6 p-0 h-auto hover:bg-transparent"
-          >
+          <Link to="/" className="mb-6 p-0 h-auto hover:bg-transparent inline-flex items-center">
             <ArrowLeftIcon className="w-[30px] h-[30px] mr-2" />
             <span className="[font-family:'Roboto',Helvetica] font-semibold text-[#1e1e1e] text-lg">
               Continuar Comprando
             </span>
-          </Button>
+          </Link>
 
           <div className="mb-4">
             <h1 className="[font-family:'Roboto',Helvetica] font-medium text-[#1e1e1e] text-lg mb-2">

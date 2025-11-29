@@ -1,6 +1,6 @@
 import { ShoppingCartIcon } from "lucide-react";
-import React from "react";
 import { Button } from "../../components/ui/button";
+import { Link } from "react-router-dom";
 
 const navigationItems = [
   { label: "Menú", href: "#menu" },
@@ -31,40 +31,47 @@ export const Locales = (): JSX.Element => {
     >
       <header className="w-full h-[100px] bg-[#ca2b4b] flex items-center justify-between px-20">
         <div className="flex items-center gap-6 translate-y-[-1rem] animate-fade-in opacity-0 [--animation-delay:0ms]">
-          <img
-            className="w-[135px] h-[100px] rounded-[50.59px] object-cover"
-            alt="Icono"
-            src="https://c.animaapp.com/mi7tkxrdIM2BKY/img/icono-1.png"
-          />
-          <h1 className="[font-family:'Roboto',Helvetica] font-medium text-[#fefdfe] text-[32px] leading-[48px] tracking-[0] whitespace-nowrap">
-            Fukusuke
-          </h1>
+          <Link to="/" className="flex items-center gap-3">
+            <img
+              className="w-[135px] h-[100px] rounded-[50.59px] object-cover"
+              alt="Icono"
+              src="https://c.animaapp.com/mi7tkxrdIM2BKY/img/icono-1.png"
+            />
+            <h1 className="[font-family:'Roboto',Helvetica] font-medium text-[#fefdfe] text-[32px] leading-[48px] tracking-[0] whitespace-nowrap">
+              Fukusuke
+            </h1>
+          </Link>
         </div>
 
         <nav className="flex items-center gap-[70.38px] translate-y-[-1rem] animate-fade-in opacity-0 [--animation-delay:200ms]">
-          <Button
-            variant="ghost"
-            size="icon"
-            className="h-auto w-auto p-0 hover:bg-transparent"
-          >
-            <ShoppingCartIcon className="w-[43.99px] h-[43.99px] text-white" />
-          </Button>
+          <Link to="/carrito" className="h-auto w-auto p-0">
+            <Button
+              variant="ghost"
+              size="icon"
+              className="h-auto w-auto p-0 hover:bg-transparent"
+              aria-label="Shopping cart"
+            >
+              <ShoppingCartIcon className="w-[43.99px] h-[43.99px] text-white" />
+            </Button>
+          </Link>
 
           {navigationItems.map((item, index) => (
-            <a
+            <Link
               key={index}
-              href={item.href}
+              to={item.href === '#locales' ? '/locales' : item.href === '#menu' ? '/' : '/contacto'}
               className="[font-family:'Inter',Helvetica] font-medium text-[#fefdfe] text-[29.3px] leading-[44.0px] tracking-[0] hover:opacity-80 transition-opacity"
             >
               {item.label}
-            </a>
+            </Link>
           ))}
 
-          <Button className="h-auto bg-[#27686b] hover:bg-[#27686b]/90 rounded-[11.73px] shadow-[0px_1.47px_2.93px_#0000000d] px-[35.19px] py-[20.53px]">
-            <span className="[font-family:'Inter',Helvetica] font-medium text-[#fefdfe] text-[23.5px] leading-[35.2px] tracking-[0]">
-              Login
-            </span>
-          </Button>
+          <Link to="/login" className="h-auto">
+            <Button className="h-auto bg-[#27686b] hover:bg-[#27686b]/90 rounded-[11.73px] shadow-[0px_1.47px_2.93px_#0000000d] px-[35.19px] py-[20.53px]">
+              <span className="[font-family:'Inter',Helvetica] font-medium text-[#fefdfe] text-[23.5px] leading-[35.2px] tracking-[0]">
+                Login
+              </span>
+            </Button>
+          </Link>
         </nav>
       </header>
 

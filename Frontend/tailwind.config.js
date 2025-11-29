@@ -7,8 +7,11 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
+        "body-text": "var(--body-text-font-family)",
         "small-text": "var(--small-text-font-family)",
         subheading: "var(--subheading-font-family)",
+        heading: "var(--heading-font-family)",
+        "single-line-body-base": "var(--single-line-body-base-font-family)",
         sans: [
           "ui-sans-serif",
           "system-ui",
@@ -59,22 +62,6 @@ module.exports = {
           foreground: "hsl(var(--card-foreground))",
         },
       },
-      fontFamily: {
-        "body-text": "var(--body-text-font-family)",
-        heading: "var(--heading-font-family)",
-        "single-line-body-base": "var(--single-line-body-base-font-family)",
-        "small-text": "var(--small-text-font-family)",
-        sans: [
-          "ui-sans-serif",
-          "system-ui",
-          "sans-serif",
-          '"Apple Color Emoji"',
-          '"Segoe UI Emoji"',
-          '"Segoe UI Symbol"',
-          '"Noto Color Emoji"',
-        ],
-      },
-      boxShadow: { "button-shadow": "var(--button-shadow)" },
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",

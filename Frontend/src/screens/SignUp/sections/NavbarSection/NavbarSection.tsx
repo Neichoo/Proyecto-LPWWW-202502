@@ -13,23 +13,22 @@ export const NavbarSection = (): JSX.Element => {
     <nav className="w-full h-[100px] bg-[#ca2b4b] translate-y-[-1rem] animate-fade-in opacity-0">
       <div className="h-full flex items-center justify-between px-[81px]">
         <div className="flex items-center gap-[13px]">
-          <img
-            className="w-[135px] h-[100px] rounded-[50.59px] object-cover"
-            alt="Icono"
-            src="https://c.animaapp.com/mi7tk9d8A2vM04/img/icono-1.png"
-          />
-          <h1 className="[font-family:'Roboto',Helvetica] font-medium text-[#fefdfe] text-[32px] tracking-[0] leading-[48px] whitespace-nowrap">
-            Fukusuke
-          </h1>
+          <Link to="/" className="flex items-center gap-3">
+            <img
+              className="w-[135px] h-[100px] rounded-[50.59px] object-cover"
+              alt="Icono"
+              src="https://c.animaapp.com/mi7tk9d8A2vM04/img/icono-1.png"
+            />
+            <h1 className="[font-family:'Roboto',Helvetica] font-medium text-[#fefdfe] text-[32px] tracking-[0] leading-[48px] whitespace-nowrap">
+              Fukusuke
+            </h1>
+          </Link>
         </div>
 
         <div className="flex items-center gap-[70.38px]">
-          <button
-            className="transition-opacity hover:opacity-80"
-            aria-label="Shopping cart"
-          >
+          <Link to="/carrito" className="transition-opacity hover:opacity-80" aria-label="Shopping cart">
             <ShoppingCartIcon className="w-[43.99px] h-[43.99px] text-[#fefdfe]" />
-          </button>
+          </Link>
 
           {navLinks.map((link, index) => (
             <Link

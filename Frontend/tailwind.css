@@ -61,6 +61,27 @@
   --animate-spin: spin 1s linear infinite;
 }
 
+/* Global frame to scale down the very large Anima export to a more normal viewport */
+.app-viewport {
+  --scale-desktop: clamp(0.78, calc(100vw / 1700), 0.9);
+  transform: scale(var(--scale-desktop));
+  transform-origin: top center;
+  width: calc(100% / var(--scale-desktop));
+  margin: 0 auto;
+  min-height: 100vh;
+}
+
+@media (max-width: 1024px) {
+  .app-viewport {
+    --scale-desktop: 1;
+    width: 100%;
+  }
+}
+
+body {
+  overflow-x: hidden;
+}
+
 .animate-fade-in {
   animation: fade-in 1s var(--animation-delay, 0s) ease forwards;
 }
@@ -244,4 +265,3 @@
     font-feature-settings: "rlig" 1, "calt" 1;
   }
 }
-

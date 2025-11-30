@@ -1,5 +1,5 @@
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
-import React from "react";
+import React, { useMemo, useState } from "react";
 import { Button } from "../../components/ui/button";
 import { Card, CardContent } from "../../components/ui/card";
 import { FooterSection } from "./sections/FooterSection";
@@ -60,66 +60,50 @@ const carouselImages = [
     id: 1,
     src: "https://c.animaapp.com/mgy9hocl11ZIi8/img/unsplash-s3ejzlra4yw.png",
     alt: "Unsplash",
-    className:
-      "w-[calc(100%_-_927px)] h-[calc(100%_-_201px)] top-[100px] left-0",
   },
   {
     id: 2,
     src: "https://c.animaapp.com/mgy9hocl11ZIi8/img/unsplash-xfngap-dtoe.png",
     alt: "Unsplash xfngap dtoe",
-    className:
-      "w-[calc(100%_-_927px)] h-[calc(100%_-_201px)] top-[100px] left-[927px]",
   },
   {
     id: 3,
     src: "https://c.animaapp.com/mgy9hocl11ZIi8/img/unsplash-yffgke3y4f8.png",
     alt: "Unsplash",
-    className:
-      "w-[calc(100%_-_727px)] h-[calc(100%_-_100px)] top-[50px] left-20",
   },
-  {
-    id: 4,
-    src: "https://c.animaapp.com/mgy9hocl11ZIi8/img/unsplash-g30p1zcozxo.png",
-    alt: "Unsplash",
-    className:
-      "w-[calc(100%_-_727px)] h-[calc(100%_-_100px)] top-[50px] left-[647px]",
-  },
-  {
-    id: 5,
-    src: "https://c.animaapp.com/mgy9hocl11ZIi8/img/unsplash-cqblg3lzepk.png",
-    alt: "Unsplash",
-    className: "w-[calc(100%_-_526px)] h-full top-0 left-[251px]",
-  },
-];
-
-const carouselDots = [
-  { id: 1, active: true },
-  { id: 2, active: false },
-  { id: 3, active: false },
-  { id: 4, active: false },
-  { id: 5, active: false },
 ];
 
 export const LandingPage = (): JSX.Element => {
+  const slides = useMemo(() => carouselImages.slice(0, 3), []);
+  const [slideIndex, setSlideIndex] = useState(0);
+
+  const goPrev = () => {
+    setSlideIndex((prev) => (prev - 1 + slides.length) % slides.length);
+  };
+
+  const goNext = () => {
+    setSlideIndex((prev) => (prev + 1) % slides.length);
+  };
+
   return (
     <div
-      className="bg-[#fefdfe] overflow-hidden w-full min-w-[1920px] relative"
+      className="bg-[#fefdfe] overflow-hidden w-full min-h-screen relative"
       data-model-id="3:391"
     >
       <NavbarSection />
 
-      <section className="relative w-full pt-[100px]">
-        <div className="flex flex-col w-[1920px] items-center gap-[80.2px] mx-auto translate-y-[-1rem] animate-fade-in opacity-0">
-          <div className="flex flex-col w-[1789.65px] items-center gap-[30.08px] px-[80.21px] py-[50.13px] relative">
-            <div className="relative w-full h-[601.83px]">
-              <div className="absolute w-[calc(100%_-_100px)] h-full top-0 left-[50px] border-[1.25px] border-solid border-black">
-                {carouselImages.map((image) => (
-                  <div
-                    key={image.id}
-                    className={`${image.className} absolute flex bg-white rounded-[50.13px] overflow-hidden`}
-                  >
+      <section className="relative w-full pt-16 px-4">
+        <div className="flex flex-col w-full items-center gap-6 max-w-7xl mx-auto translate-y-[-1rem] animate-fade-in opacity-0">
+          <div className="w-full relative">
+            <div className="overflow-hidden rounded-3xl border border-black shadow-sm">
+              <div
+                className="flex transition-transform duration-500 ease-in-out"
+                style={{ transform: `translateX(-${slideIndex * 100}%)` }}
+              >
+                {slides.map((image) => (
+                  <div key={image.id} className="w-full flex-shrink-0">
                     <img
-                      className="flex-1 object-cover"
+                      className="w-full h-[240px] md:h-[360px] object-contain bg-white"
                       alt={image.alt}
                       src={image.src}
                     />
@@ -128,36 +112,37 @@ export const LandingPage = (): JSX.Element => {
               </div>
             </div>
 
-            <div className="inline-flex items-center justify-center gap-[10.03px] p-[10.03px] relative flex-[0_0_auto]">
+            <div className="absolute inset-y-0 left-2 flex items-center">
               <Button
                 variant="ghost"
                 size="icon"
-                className="h-auto p-[10.03px]"
+                className="h-10 w-10 p-0 bg-white/70 hover:bg-white shadow-sm"
+                onClick={goPrev}
               >
-                <ChevronLeftIcon className="w-[30.08px] h-[30.08px]" />
-              </Button>
-
-              <div className="inline-flex items-center gap-[12.53px] p-[10.03px] relative flex-[0_0_auto]">
-                {carouselDots.map((dot) => (
-                  <div
-                    key={dot.id}
-                    className={`relative ${
-                      dot.active
-                        ? "w-[20.05px] h-[20.05px] bg-[#eb7e5c] rounded-[10.03px]"
-                        : "w-[15.04px] h-[15.04px] bg-carouselgray rounded-[7.52px] opacity-50"
-                    }`}
-                  />
-                ))}
-              </div>
-
-              <Button
-                variant="ghost"
-                size="icon"
-                className="h-auto p-[10.03px]"
-              >
-                <ChevronRightIcon className="w-[30.08px] h-[30.08px]" />
+                <ChevronLeftIcon className="w-5 h-5" />
               </Button>
             </div>
+            <div className="absolute inset-y-0 right-2 flex items-center">
+              <Button
+                variant="ghost"
+                size="icon"
+                className="h-10 w-10 p-0 bg-white/70 hover:bg-white shadow-sm"
+                onClick={goNext}
+              >
+                <ChevronRightIcon className="w-5 h-5" />
+              </Button>
+            </div>
+          </div>
+
+          <div className="inline-flex items-center justify-center gap-3 p-2 rounded-xl bg-white/80 shadow-sm">
+            {slides.map((_, idx) => (
+              <button
+                key={idx}
+                onClick={() => setSlideIndex(idx)}
+                className={`transition-all ${idx === slideIndex ? "w-4 h-4 bg-[#eb7e5c] rounded-full" : "w-3 h-3 bg-carouselgray rounded-full opacity-50"}`}
+                aria-label={`Ir a imagen ${idx + 1}`}
+              />
+            ))}
           </div>
         </div>
       </section>
@@ -168,35 +153,38 @@ export const LandingPage = (): JSX.Element => {
 
       <SaucesSaleSection />
 
-      <section className="relative w-full px-[80px] py-16 translate-y-[-1rem] animate-fade-in opacity-0 [--animation-delay:200ms]">
-        <div className="flex flex-col items-start gap-8 max-w-[1760px] mx-auto">
-          <h2 className="[font-family:'Roboto',Helvetica] font-semibold text-black text-8xl tracking-[-1.92px] leading-[normal]">
+      <section id="bebidas" className="relative w-full px-4 py-16 translate-y-[-1rem] animate-fade-in opacity-0 [--animation-delay:200ms]">
+        <div className="flex flex-col items-start gap-8 max-w-7xl mx-auto">
+          <h2 className="[font-family:'Roboto',Helvetica] font-semibold text-black text-4xl md:text-5xl tracking-tight leading-[1.1]">
             Bebidas (350ml)
           </h2>
 
-          <div className="flex w-full items-center gap-8 bg-white border border-solid border-black p-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 w-full bg-white border border-solid border-black p-6 rounded-2xl shadow-sm">
             {drinksData.map((drink, index) => (
               <Card
                 key={drink.id}
-                className="flex-1 border-0 shadow-none translate-y-[-1rem] animate-fade-up opacity-0"
+                className="border border-solid border-black bg-white translate-y-[-1rem] animate-fade-up opacity-0 transition-[transform,box-shadow] hover:scale-[1.02] hover:shadow-lg duration-300"
                 style={
                   {
                     "--animation-delay": `${400 + index * 200}ms`,
                   } as React.CSSProperties
                 }
               >
-                <CardContent className="flex flex-col items-start gap-6 p-0">
-                  <div
-                    className="relative w-full h-[405px] rounded-lg bg-cover bg-center bg-no-repeat"
-                    style={{ backgroundImage: `url(${drink.image})` }}
-                  />
+                <CardContent className="flex flex-col items-start gap-4 p-6">
+                  <div className="relative w-full h-[200px] md:h-[240px] rounded-xl bg-white flex items-center justify-center overflow-hidden">
+                    <img
+                      src={drink.image}
+                      alt={drink.name}
+                      className="w-full h-full object-contain"
+                    />
+                  </div>
 
                   <div className="flex flex-col items-start justify-center gap-1 w-full">
-                    <h3 className="w-full [font-family:'Roboto',Helvetica] font-medium text-black text-2xl text-center tracking-[0] leading-9">
+                    <h3 className="w-full [font-family:'Roboto',Helvetica] font-medium text-black text-xl md:text-2xl text-center tracking-[0] leading-8">
                       {drink.name}
                     </h3>
 
-                    <p className="w-full flex items-center justify-center [font-family:'Roboto',Helvetica] font-normal text-[#828282] text-2xl text-center tracking-[0] leading-9">
+                    <p className="w-full flex items-center justify-center [font-family:'Roboto',Helvetica] font-normal text-[#4b5563] text-lg md:text-xl text-center tracking-[0] leading-7">
                       {drink.description}
                     </p>
                   </div>
@@ -207,35 +195,38 @@ export const LandingPage = (): JSX.Element => {
         </div>
       </section>
 
-      <section className="relative w-full px-[80px] py-16 translate-y-[-1rem] animate-fade-in opacity-0 [--animation-delay:400ms]">
-        <div className="flex flex-col items-start gap-8 max-w-[1760px] mx-auto">
-          <h2 className="[font-family:'Roboto',Helvetica] font-semibold text-black text-8xl tracking-[-1.92px] leading-[normal]">
+      <section id="promociones" className="relative w-full px-4 py-16 translate-y-[-1rem] animate-fade-in opacity-0 [--animation-delay:400ms]">
+        <div className="flex flex-col items-start gap-8 max-w-7xl mx-auto">
+          <h2 className="[font-family:'Roboto',Helvetica] font-semibold text-black text-4xl md:text-5xl tracking-tight leading-[1.1]">
             Promociones
           </h2>
 
-          <div className="flex w-full items-center gap-8 bg-white border border-solid border-black p-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 w-full bg-white border border-solid border-black p-6 rounded-2xl shadow-sm">
             {promosData.map((promo, index) => (
               <Card
                 key={promo.id}
-                className="flex-1 border-0 shadow-none translate-y-[-1rem] animate-fade-up opacity-0"
+                className="border border-solid border-black bg-white translate-y-[-1rem] animate-fade-up opacity-0 transition-[transform,box-shadow] hover:scale-[1.02] hover:shadow-lg duration-300"
                 style={
                   {
                     "--animation-delay": `${600 + index * 200}ms`,
                   } as React.CSSProperties
                 }
               >
-                <CardContent className="flex flex-col items-start gap-6 p-0">
-                  <div
-                    className="relative w-full h-[405px] rounded-lg bg-cover bg-center bg-no-repeat"
-                    style={{ backgroundImage: `url(${promo.image})` }}
-                  />
+                <CardContent className="flex flex-col items-start gap-4 p-6">
+                  <div className="relative w-full h-[200px] md:h-[240px] rounded-xl bg-white flex items-center justify-center overflow-hidden">
+                    <img
+                      src={promo.image}
+                      alt={promo.name}
+                      className="w-full h-full object-contain"
+                    />
+                  </div>
 
                   <div className="flex flex-col items-start justify-center gap-1 w-full">
-                    <h3 className="w-full [font-family:'Roboto',Helvetica] font-medium text-black text-2xl text-center tracking-[0] leading-9">
+                    <h3 className="w-full [font-family:'Roboto',Helvetica] font-medium text-black text-xl md:text-2xl text-center tracking-[0] leading-8">
                       {promo.name}
                     </h3>
 
-                    <p className="w-full flex items-center justify-center [font-family:'Roboto',Helvetica] font-normal text-[#828282] text-2xl text-center tracking-[0] leading-9">
+                    <p className="w-full flex items-center justify-center [font-family:'Roboto',Helvetica] font-normal text-[#4b5563] text-lg md:text-xl text-center tracking-[0] leading-7">
                       {promo.description}
                     </p>
                   </div>

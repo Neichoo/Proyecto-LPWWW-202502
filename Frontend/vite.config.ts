@@ -6,7 +6,8 @@ import { defineConfig } from "vite";
 // https://vite.dev/config/
 export default defineConfig(({ mode }) => ({
   plugins: [react(), mode === "development" && screenGraphPlugin()],
-  publicDir: "./static",
+  // Servimos archivos estáticos desde /public (para que cobertura.png funcione)
+  publicDir: "./public",
   base: "./",
   css: {
     postcss: {

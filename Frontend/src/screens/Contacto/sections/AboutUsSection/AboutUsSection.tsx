@@ -3,7 +3,7 @@ import React from "react";
 export const AboutUsSection = (): JSX.Element => {
   return (
     <section className="flex flex-col w-full max-w-[1013px] items-start gap-6 px-4 md:px-0">
-      <h2 className="relative w-full font-title font-[number:var(--title-font-weight)] text-black text-[length:var(--title-font-size)] tracking-[var(--title-letter-spacing)] leading-[var(--title-line-height)] [font-style:var(--title-font-style)] opacity-0 translate-y-[-1rem] animate-fade-in [--animation-delay:0ms]">
+      <h2 className="relative w-full font-title text-4xl md:text-5xl font-semibold text-black tracking-tight leading-tight opacity-0 translate-y-[-1rem] animate-fade-in [--animation-delay:0ms]">
         Acerca de nosotros
       </h2>
 

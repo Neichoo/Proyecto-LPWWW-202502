@@ -1,4 +1,4 @@
-import { EyeIcon, EyeOffIcon, ShoppingCartIcon } from "lucide-react";
+import { EyeIcon, EyeOffIcon } from "lucide-react";
 import React, { useState } from "react";
 import { Button } from "../../components/ui/button";
 import { Link } from "react-router-dom";
@@ -6,6 +6,7 @@ import { Checkbox } from "../../components/ui/checkbox";
 import { Input } from "../../components/ui/input";
 import { Label } from "../../components/ui/label";
 import { postFormUrlEncoded } from "../../lib/api";
+import { MainNavbar } from "../../components/navigation/MainNavbar";
 
   const navigationItems = [
   { label: "Menú", to: "/" },
@@ -42,68 +43,27 @@ export const Login = (): JSX.Element => {
 
   return (
     <div
-      className="bg-[#27686b] w-full min-w-[1920px] min-h-[1500px] flex flex-col"
+      className="bg-[#27686b] w-full min-h-screen flex flex-col"
       data-model-id="99:1027"
     >
-      <header className="w-full h-[100px] bg-[#ca2b4b] flex items-center justify-between px-[81px] translate-y-[-1rem] animate-fade-in opacity-0">
-        <div className="flex items-center gap-[13px]">
-          <Link to="/" className="flex items-center gap-3">
-            <img
-              className="w-[135px] h-[100px] rounded-[50.59px] object-cover"
-              alt="Icono"
-              src="https://c.animaapp.com/mi7thhexUlRvcK/img/icono-1.png"
-            />
-            <h1 className="[font-family:'Inter',Helvetica] font-medium text-[#fefdfe] text-[32px] leading-[48px] whitespace-nowrap">
-              Fukusuke
-            </h1>
-          </Link>
-        </div>
-
-        <nav className="flex items-center gap-[70.38px]">
-          <Link to="/carrito" className="h-auto w-auto p-0">
-            <Button
-              variant="ghost"
-              size="icon"
-              className="h-auto w-auto p-0 hover:bg-transparent"
-              aria-label="Shopping cart"
-            >
-              <ShoppingCartIcon className="w-[43.99px] h-[43.99px] text-[#fefdfe]" />
-            </Button>
-          </Link>
-
-          {navigationItems.map((item, index) => (
-            <Link key={index} to={item.to} className="h-auto px-0 py-0">
-              <Button
-                variant="ghost"
-                className="h-auto px-0 py-0 hover:bg-transparent [font-family:'Inter',Helvetica] font-medium text-[#fefdfe] text-[29.3px] leading-[44px]"
-              >
-                {item.label}
-              </Button>
-            </Link>
-          ))}
-
-          <Link to="/signup">
-            <Button className="h-auto bg-[#27686b] hover:bg-[#1f5558] rounded-[11.73px] shadow-[0px_1.47px_2.93px_#0000000d] px-[35.19px] py-[20.53px] [font-family:'Inter',Helvetica] font-medium text-[#fefdfe] text-[23.5px] leading-[35.2px]">
-              Login
-            </Button>
-          </Link>
-        </nav>
+      <header className="translate-y-[-1rem] animate-fade-in opacity-0">
+        <MainNavbar />
       </header>
 
-      <main className="flex-1 flex items-start justify-center pt-[92px] pb-[491px] px-[81px]">
-        <div className="w-full max-w-[1757px] bg-white flex items-start justify-center pt-[101.9px] translate-y-[-1rem] animate-fade-in opacity-0 [--animation-delay:200ms]">
-          <div className="w-[780.6px] flex flex-col items-center gap-[64.6px]">
-            <div className="flex flex-col items-center gap-[32.3px] w-full">
-              <div className="flex flex-col items-start gap-[43.07px] w-full">
-                <h2 className="[font-family:'Roboto',Helvetica] font-medium text-[#333333] text-[43.1px] leading-normal self-center">
+      <main className="flex-1 flex items-start justify-center py-16 px-6">
+        <div className="w-full max-w-4xl bg-white flex items-start justify-center py-12 px-8 rounded-2xl shadow-sm translate-y-[-1rem] animate-fade-in opacity-0 [--animation-delay:200ms]">
+          <div className="w-full max-w-xl flex flex-col items-center gap-12">
+            <div className="flex flex-col items-center gap-8 w-full">
+              <div className="flex flex-col items-start gap-8 w-full">
+                <h2 className="[font-family:'Roboto',Helvetica] font-medium text-[#333333] text-3xl leading-normal self-center">
                   Log in
                 </h2>
 
-                <div className="flex flex-col gap-[32.3px] w-full">
-                  <div className="flex flex-col gap-[5.38px] w-full">
+                <div className="flex flex-col gap-8 w-full">
+                  <div className="flex flex-col gap-2 w-full">
                     <Label
                       htmlFor="email"
-                      className="[font-family:'Poppins',Helvetica] font-normal text-[#666666] text-[21.5px] leading-normal h-[36.34px] flex items-start"
+                      className="[font-family:'Poppins',Helvetica] font-normal text-[#444444] text-[16px] leading-normal flex items-start"
                     >
                       Email address or user name
                     </Label>
@@ -112,31 +72,31 @@ export const Login = (): JSX.Element => {
                       type="text"
                       value={usernameOrEmail}
                       onChange={(e) => setUsernameOrEmail(e.target.value)}
-                      className="h-[75.37px] rounded-[16.15px] border-[1.35px] border-[#66666659]"
+                      className="h-12 rounded-[12px] border border-[#66666659]"
                     />
                   </div>
 
                   <div className="flex flex-col gap-0 w-full">
-                    <div className="flex flex-col gap-[5.38px] w-full">
-                      <div className="flex items-start justify-between h-[36.34px]">
+                    <div className="flex flex-col gap-2 w-full">
+                      <div className="flex items-start justify-between">
                         <Label
                           htmlFor="password"
-                          className="[font-family:'Roboto',Helvetica] font-normal text-[#666666] text-[21.5px] leading-normal whitespace-nowrap"
+                          className="[font-family:'Roboto',Helvetica] font-normal text-[#444444] text-[16px] leading-normal whitespace-nowrap"
                         >
                           Password
                         </Label>
                         <Button
                           variant="ghost"
                           size="sm"
-                          className="h-auto px-0 py-0 hover:bg-transparent flex items-center gap-[15.8px]"
+                          className="h-auto px-0 py-0 hover:bg-transparent flex items-center gap-3"
                           onClick={() => setShowPassword(!showPassword)}
                         >
                           {showPassword ? (
-                            <EyeOffIcon className="w-[32.3px] h-[32.3px] text-[#666666]" />
+                            <EyeOffIcon className="w-6 h-6 text-[#666666]" />
                           ) : (
-                            <EyeIcon className="w-[32.3px] h-[32.3px] text-[#666666]" />
+                            <EyeIcon className="w-6 h-6 text-[#666666]" />
                           )}
-                          <span className="[font-family:'Roboto',Helvetica] font-normal text-[#666666cc] text-[24.2px] leading-normal">
+                          <span className="[font-family:'Roboto',Helvetica] font-normal text-[#666666cc] text-[16px] leading-normal">
                             Hide
                           </span>
                         </Button>
@@ -146,26 +106,26 @@ export const Login = (): JSX.Element => {
                         type={showPassword ? "text" : "password"}
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
-                        className="h-[75.37px] rounded-[16.15px] border-[1.35px] border-[#66666659]"
+                        className="h-12 rounded-[12px] border border-[#66666659]"
                       />
                     </div>
 
-                    <div className="flex items-center gap-[10.77px] py-[10.77px]">
+                    <div className="flex items-center gap-3 py-3">
                       <Checkbox
                         id="remember"
-                        className="w-[32.3px] h-[32.3px]"
+                        className="w-5 h-5"
                       />
                       <Label
                         htmlFor="remember"
-                        className="[font-family:'Roboto',Helvetica] font-normal text-[#333333] text-[21.5px] leading-normal whitespace-nowrap cursor-pointer"
+                        className="[font-family:'Roboto',Helvetica] font-normal text-[#333333] text-[16px] leading-normal whitespace-nowrap cursor-pointer"
                       >
                         Remember me
                       </Label>
                     </div>
                   </div>
 
-                  <div className="flex flex-col gap-[10.77px] w-full">
-                    <p className="[font-family:'Roboto',Helvetica] font-normal text-[21.5px] leading-normal py-[10.77px]">
+                  <div className="flex flex-col gap-3 w-full">
+                    <p className="[font-family:'Roboto',Helvetica] font-normal text-[16px] leading-normal py-3 text-[#444444]">
                       <span className="text-[#333333]">
                         By continuing, you agree to the{" "}
                       </span>
@@ -183,7 +143,7 @@ export const Login = (): JSX.Element => {
                       <Button
                         type="submit"
                         disabled={loading || !usernameOrEmail || !password}
-                        className={`h-[86.13px] w-full bg-[#111111] hover:bg-[#111111] rounded-[43.07px] [font-family:'Poppins',Helvetica] font-medium text-white text-[29.6px] ${loading || !usernameOrEmail || !password ? 'opacity-50' : ''}`}
+                        className={`h-12 w-full bg-[#111111] hover:bg-[#111111] rounded-[12px] [font-family:'Poppins',Helvetica] font-medium text-white text-[18px] ${loading || !usernameOrEmail || !password ? 'opacity-50' : ''}`}
                       >
                         {loading ? 'Logging in...' : 'Log in'}
                       </Button>
@@ -192,22 +152,22 @@ export const Login = (): JSX.Element => {
                 </div>
               </div>
 
-              <div className="flex flex-col items-center gap-[32.3px]">
+              <div className="flex flex-col items-center gap-6">
                 <Button
                   variant="link"
-                  className="h-auto p-[2.69px] [font-family:'Roboto',Helvetica] font-medium text-[#111111] text-[21.5px] leading-normal underline"
+                  className="h-auto p-0 [font-family:'Roboto',Helvetica] font-medium text-[#111111] text-[16px] leading-normal underline"
                 >
                   Forget your password
                 </Button>
 
-                <p className="[font-family:'Roboto',Helvetica] font-normal text-[21.5px] leading-normal p-[2.69px]">
+                <p className="[font-family:'Roboto',Helvetica] font-normal text-[16px] leading-normal p-0">
                   <span className="text-[#666666]">
                     Don&apos;t have an acount?{" "}
                   </span>
                   <Link to="/signup">
                     <Button
                       variant="link"
-                      className="h-auto p-0 [font-family:'Roboto',Helvetica] font-medium text-[#111111] text-[21.5px] leading-normal underline"
+                      className="h-auto p-0 [font-family:'Roboto',Helvetica] font-medium text-[#111111] text-[16px] leading-normal underline"
                     >
                       Sign up
                     </Button>

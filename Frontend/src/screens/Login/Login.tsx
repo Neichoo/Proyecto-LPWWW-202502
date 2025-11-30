@@ -5,47 +5,46 @@ import { Link } from "react-router-dom";
 import { Checkbox } from "../../components/ui/checkbox";
 import { Input } from "../../components/ui/input";
 import { Label } from "../../components/ui/label";
-import { postFormUrlEncoded } from "../../lib/api";
+import { getJson, postFormUrlEncoded } from "../../lib/api";
 import { MainNavbar } from "../../components/navigation/MainNavbar";
 
-  const navigationItems = [
-  { label: "Menú", to: "/" },
-  { label: "Locales", to: "/locales" },
-  { label: "Contacto", to: "/contacto" },
-];
-
 export const Login = (): JSX.Element => {
-  const [showPassword, setShowPassword] = React.useState(false);
-  const [usernameOrEmail, setUsernameOrEmail] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [credential, setCredential] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [remember, setRemember] = useState(false);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
     setLoading(true);
     try {
-      // backend login uses OAuth2 form with username & password
-      const resp = await postFormUrlEncoded('/api/auth/login', { username: usernameOrEmail, password });
-      if (resp.ok) {
-        // store token
-        localStorage.setItem('token', resp.data.access_token);
-        // redirect to home
-        window.location.href = '/';
+      const loginUsername = credential.includes("@") ? credential.split("@")[0] : credential;
+      const resp = await postFormUrlEncoded("/api/auth/login", { username: loginUsername, password });
+      if (resp.ok && resp.data.access_token) {
+        const token = resp.data.access_token;
+        if (remember) {
+          localStorage.setItem("token", token);
+        } else {
+          sessionStorage.setItem("token", token);
+        }
+        // opcional: validar token
+        await getJson("/api/auth/me");
+        window.location.href = "/";
       } else {
-        setError((resp.data && resp.data.detail) || 'Login failed');
+        setError((resp.data && (resp.data.detail || resp.data.message)) || "Login failed");
       }
     } catch (err) {
       setError(String(err));
-    } finally { setLoading(false); }
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
-    <div
-      className="bg-[#27686b] w-full min-h-screen flex flex-col"
-      data-model-id="99:1027"
-    >
+    <div className="bg-[#27686b] w-full min-h-screen flex flex-col" data-model-id="99:1027">
       <header className="translate-y-[-1rem] animate-fade-in opacity-0">
         <MainNavbar />
       </header>
@@ -60,18 +59,15 @@ export const Login = (): JSX.Element => {
                 </h2>
 
                 <div className="flex flex-col gap-8 w-full">
-                  <div className="flex flex-col gap-2 w-full">
-                    <Label
-                      htmlFor="email"
-                      className="[font-family:'Poppins',Helvetica] font-normal text-[#444444] text-[16px] leading-normal flex items-start"
-                    >
-                      Email address or user name
+                <div className="flex flex-col gap-2 w-full">
+                    <Label htmlFor="username" className="[font-family:'Poppins',Helvetica] font-normal text-[#444444] text-[16px] leading-normal flex items-start">
+                      Usuario o email (usa el mismo que registraste)
                     </Label>
                     <Input
-                      id="email"
+                      id="username"
                       type="text"
-                      value={usernameOrEmail}
-                      onChange={(e) => setUsernameOrEmail(e.target.value)}
+                      value={credential}
+                      onChange={(e) => setCredential(e.target.value)}
                       className="h-12 rounded-[12px] border border-[#66666659]"
                     />
                   </div>
@@ -114,6 +110,8 @@ export const Login = (): JSX.Element => {
                       <Checkbox
                         id="remember"
                         className="w-5 h-5"
+                        checked={remember}
+                        onCheckedChange={(v) => setRemember(Boolean(v))}
                       />
                       <Label
                         htmlFor="remember"
@@ -126,9 +124,7 @@ export const Login = (): JSX.Element => {
 
                   <div className="flex flex-col gap-3 w-full">
                     <p className="[font-family:'Roboto',Helvetica] font-normal text-[16px] leading-normal py-3 text-[#444444]">
-                      <span className="text-[#333333]">
-                        By continuing, you agree to the{" "}
-                      </span>
+                      <span className="text-[#333333]">By continuing, you agree to the </span>
                       <a href="#" className="text-[#111111] underline">
                         Terms of use
                       </a>
@@ -142,10 +138,12 @@ export const Login = (): JSX.Element => {
                       {error && <div className="text-red-600 mb-2">{error}</div>}
                       <Button
                         type="submit"
-                        disabled={loading || !usernameOrEmail || !password}
-                        className={`h-12 w-full bg-[#111111] hover:bg-[#111111] rounded-[12px] [font-family:'Poppins',Helvetica] font-medium text-white text-[18px] ${loading || !usernameOrEmail || !password ? 'opacity-50' : ''}`}
+                        disabled={loading || !credential || !password}
+                        className={`h-12 w-full bg-[#111111] hover:bg-[#111111] rounded-[12px] [font-family:'Poppins',Helvetica] font-medium text-white text-[18px] ${
+                          loading || !credential || !password ? "opacity-50" : ""
+                        }`}
                       >
-                        {loading ? 'Logging in...' : 'Log in'}
+                        {loading ? "Logging in..." : "Log in"}
                       </Button>
                     </form>
                   </div>
@@ -153,22 +151,14 @@ export const Login = (): JSX.Element => {
               </div>
 
               <div className="flex flex-col items-center gap-6">
-                <Button
-                  variant="link"
-                  className="h-auto p-0 [font-family:'Roboto',Helvetica] font-medium text-[#111111] text-[16px] leading-normal underline"
-                >
+                <Button variant="link" className="h-auto p-0 [font-family:'Roboto',Helvetica] font-medium text-[#111111] text-[16px] leading-normal underline">
                   Forget your password
                 </Button>
 
                 <p className="[font-family:'Roboto',Helvetica] font-normal text-[16px] leading-normal p-0">
-                  <span className="text-[#666666]">
-                    Don&apos;t have an acount?{" "}
-                  </span>
+                  <span className="text-[#666666]">Don&apos;t have an account? </span>
                   <Link to="/signup">
-                    <Button
-                      variant="link"
-                      className="h-auto p-0 [font-family:'Roboto',Helvetica] font-medium text-[#111111] text-[16px] leading-normal underline"
-                    >
+                    <Button variant="link" className="h-auto p-0 [font-family:'Roboto',Helvetica] font-medium text-[#111111] text-[16px] leading-normal underline">
                       Sign up
                     </Button>
                   </Link>

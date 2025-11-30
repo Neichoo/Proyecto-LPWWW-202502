@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Session
+from sqlalchemy import func
 import models, schemas
 import auth as auth_module
-from sqlalchemy import func
 
 
 def get_user(db: Session, user_id: int):
@@ -185,10 +185,8 @@ def add_to_cart(db: Session, user_id: int, product_id: int, quantity: int):
     price = prod.price
     if item:
         item.quantity += quantity
-        item.subtotal = item.quantity * price
     else:
         item = models.CartItem(cart_id=cart.id, product_id=product_id, quantity=quantity, price=price)
-        item.subtotal = quantity * price
         db.add(item)
     db.commit()
     db.refresh(item)
@@ -200,7 +198,7 @@ def get_cart(db: Session, user_id: int):
     if not cart:
         return None
     items = db.query(models.CartItem).filter(models.CartItem.cart_id == cart.id).all()
-    subtotal = sum(i.subtotal for i in items)
+    subtotal = sum(i.price * i.quantity for i in items)
     shipping = 3500
     total = subtotal + shipping
     return cart, items, subtotal, shipping, total
@@ -211,7 +209,6 @@ def update_cart_item(db: Session, item_id: int, quantity: int):
     if not item:
         return None
     item.quantity = quantity
-    item.subtotal = item.quantity * item.price
     db.add(item)
     db.commit()
     db.refresh(item)

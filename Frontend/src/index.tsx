@@ -30,6 +30,7 @@ import { Administrador as AdministradorCompras } from "./screens/AdministradorCo
 import { CajaOnline } from "./screens/CajaOnline/CajaOnline";
 import { CarritoDeCompras } from "./screens/CarritoDeCompras/CarritoDeCompras";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { ToastContainer } from "./components/ui/ToastContainer";
 
 createRoot(document.getElementById("app") as HTMLElement).render(
   <StrictMode>
@@ -52,6 +53,7 @@ createRoot(document.getElementById("app") as HTMLElement).render(
         </Routes>
       </BrowserRouter>
     </div>
+    <ToastContainer />
   </StrictMode>,
 );
 

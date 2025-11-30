@@ -25,7 +25,15 @@ def add_item(payload: schemas.AddToCartIn, db: Session = Depends(get_db), curren
     item = crud.add_to_cart(db, user_id, payload.product_id, payload.quantity)
     if not item:
         raise HTTPException(status_code=404, detail="Product not found")
-    return item
+    prod = crud.get_product(db, item.product_id)
+    return schemas.CartItemOut(
+        id=item.id,
+        product_id=item.product_id,
+        name=prod.title if prod else "",
+        price=item.price,
+        quantity=item.quantity,
+        subtotal=item.price * item.quantity,
+    )
 
 
 @router.get("", response_model=schemas.CartOut)
@@ -39,7 +47,16 @@ def get_cart(db: Session = Depends(get_db), current_user: models.User = Depends(
     out_items = []
     for it in items:
         prod = crud.get_product(db, it.product_id)
-        out_items.append(schemas.CartItemOut(id=it.id, product_id=it.product_id, name=(prod.title if prod else ""), price=it.price, quantity=it.quantity, subtotal=it.subtotal))
+        out_items.append(
+            schemas.CartItemOut(
+                id=it.id,
+                product_id=it.product_id,
+                name=(prod.title if prod else ""),
+                price=it.price,
+                quantity=it.quantity,
+                subtotal=it.price * it.quantity,
+            )
+        )
     return schemas.CartOut(id=cart.id, user_id=cart.user_id, items=out_items, subtotal=subtotal, shipping=shipping, total=total)
 
 
@@ -49,7 +66,7 @@ def update_item(item_id: int, payload: schemas.UpdateCartItemIn, db: Session = D
     if not item:
         raise HTTPException(status_code=404, detail="Item not found")
     prod = crud.get_product(db, item.product_id)
-    return schemas.CartItemOut(id=item.id, product_id=item.product_id, name=(prod.title if prod else ""), price=item.price, quantity=item.quantity, subtotal=item.subtotal)
+    return schemas.CartItemOut(id=item.id, product_id=item.product_id, name=(prod.title if prod else ""), price=item.price, quantity=item.quantity, subtotal=item.price * item.quantity)
 
 
 @router.delete("/item/{item_id}", status_code=204)

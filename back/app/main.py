@@ -1,10 +1,9 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-import models
-from database import engine
 from fastapi.staticfiles import StaticFiles
 import os
-
+import models
+from database import engine
 from routers import auth_router as auth, products, uploads, internal_logs, cart, orders
 from routers import admin as admin
 
@@ -14,7 +13,7 @@ models.Base.metadata.create_all(bind=engine)
 app = FastAPI(title="LPWWW FastAPI Base")
 
 # CORS config for frontend development. Set FRONTEND_ORIGINS as comma-separated env var if needed.
-origins = os.getenv("FRONTEND_ORIGINS", "http://localhost:5173").split(",")
+origins = os.getenv("FRONTEND_ORIGINS", "http://localhost:5173,http://127.0.0.1:5173").split(",")
 
 app.add_middleware(
 	CORSMiddleware,
@@ -39,4 +38,3 @@ app.mount('/', StaticFiles(directory='static', html=True), name='static')
 upload_dir = os.getenv('UPLOAD_DIR', '/app/media')
 os.makedirs(upload_dir, exist_ok=True)
 app.mount('/media', StaticFiles(directory=upload_dir), name='media')
-

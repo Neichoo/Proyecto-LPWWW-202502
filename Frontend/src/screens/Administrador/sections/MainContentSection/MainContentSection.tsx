@@ -1,5 +1,3 @@
-import React from "react";
-
 export const MainContentSection = (): JSX.Element => {
   const columns = [
     { label: "Nombre", width: "flex-[286]" },

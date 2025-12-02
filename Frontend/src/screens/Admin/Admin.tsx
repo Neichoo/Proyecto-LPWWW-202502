@@ -1,11 +1,11 @@
 import React from "react";
 import { Button } from "../../components/ui/button";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const adminButtons = [
-  { id: 1, label: "Administrar Productos" },
-  { id: 2, label: "Administrar Usuarios" },
-  { id: 3, label: "Administrar Compras" },
+  { id: 1, label: "Administrar Productos", path: "/administrador" },
+  { id: 2, label: "Administrar Usuarios", path: "/administrador-usuarios" },
+  { id: 3, label: "Administrar Compras", path: "/administrador-compras" },
 ];
 
 const footerColumns = [
@@ -24,6 +24,7 @@ const footerColumns = [
 ];
 
 export const Admin = (): JSX.Element => {
+  const navigate = useNavigate();
   return (
     <div
       className="bg-[#fefdfe] w-full min-h-screen flex flex-col"
@@ -43,7 +44,21 @@ export const Admin = (): JSX.Element => {
           </Link>
         </div>
 
-        <Button className="h-auto gap-[11.73px] px-[35.19px] py-[20.53px] bg-[#27686b] rounded-[11.73px] shadow-[0px_1.47px_2.93px_#0000000d] hover:bg-[#1f5558] transition-colors">
+        <Button
+          className="h-auto gap-[11.73px] px-[35.19px] py-[20.53px] bg-[#27686b] rounded-[11.73px] shadow-[0px_1.47px_2.93px_#0000000d] hover:bg-[#1f5558] transition-colors"
+          onClick={() => {
+            // clear auth and redirect to home
+            try {
+              localStorage.removeItem("token");
+              localStorage.removeItem("user");
+            } catch {}
+            try {
+              sessionStorage.removeItem("token");
+              sessionStorage.removeItem("user");
+            } catch {}
+            navigate("/");
+          }}
+        >
           <span className="[font-family:'Inter',Helvetica] font-medium text-[#fefdfe] text-[23.5px] leading-[35.2px]">
             Logout
           </span>
@@ -55,6 +70,7 @@ export const Admin = (): JSX.Element => {
           {adminButtons.map((button, index) => (
             <Button
               key={button.id}
+              onClick={() => navigate(button.path)}
               className="h-28 w-[916px] bg-[#2c2c2c] rounded-lg border border-solid hover:bg-[#3c3c3c] transition-colors translate-y-[-1rem] animate-fade-in opacity-0"
               style={
                 {

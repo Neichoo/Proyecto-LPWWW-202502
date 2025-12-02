@@ -33,7 +33,7 @@ def register(user: schemas.UserCreate, db: Session = Depends(get_db)):
     return db_user
 
 
-@router.post("/login", response_model=schemas.Token)
+@router.post("/login", response_model=schemas.LoginResponse)
 async def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
     user = crud.get_user_by_username(db, username=form_data.username)
     if not user or not auth.verify_password(form_data.password, user.hashed_password):
@@ -43,14 +43,22 @@ async def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = 
             headers={"WWW-Authenticate": "Bearer"},
         )
     access_token_expires = timedelta(minutes=auth.ACCESS_TOKEN_EXPIRE_MINUTES)
-    access_token = auth.create_access_token(data={"sub": user.username}, expires_delta=access_token_expires)
-    return {"access_token": access_token, "token_type": "bearer"}
+    # include role in the token payload so clients can inspect authorization if needed
+    access_token = auth.create_access_token(data={"sub": user.username, "role": user.role}, expires_delta=access_token_expires)
+    # return token and basic user info so the client can store it without an extra /me call
+    return {"access_token": access_token, "token_type": "bearer", "user": user}
 
 
 
 @router.get('/me', response_model=schemas.UserOut)
 def get_me(current_user: models.User = Depends(auth_module.get_current_user)):
     return current_user
+
+
+@router.get('/is_admin', response_model=dict)
+def is_admin(current_user: models.User = Depends(auth_module.get_current_user)):
+    """Return whether the current authenticated user has admin role."""
+    return {"is_admin": getattr(current_user, "role", "cliente") == "admin"}
 
 
 @router.put('/me', response_model=schemas.UserOut)

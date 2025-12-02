@@ -84,26 +84,7 @@ export const SignUpSection = (): JSX.Element => {
               <Input value={email} onChange={(e) => setEmail(e.target.value)} className="h-[74.67px] rounded-2xl border-[1.33px] border-[#66666659]" />
             </div>
 
-            <div className="flex flex-col gap-[5.33px]">
-              <Label className="[font-family:'Poppins',Helvetica] font-normal text-[#666666] text-[21.3px] leading-normal">
-                Phone number
-              </Label>
-              <div className="relative h-[74.67px] rounded-2xl border-[1.33px] border-[#66666659] overflow-hidden">
-                <div className="absolute top-[19px] left-8 flex items-center gap-5">
-                  <div className="flex items-center gap-[10.67px]">
-                    <div className="relative w-12 h-[34.67px] bg-[url(https://c.animaapp.com/mi7tk9d8A2vM04/img/vector-3.svg)] bg-[100%_100%]">
-                      <img className="absolute w-full h-[84.62%] top-[7.69%] left-0" alt="Vector" src="https://c.animaapp.com/mi7tk9d8A2vM04/img/vector-1.svg" />
-                      <img className="absolute w-[50.00%] h-[53.85%] top-0 left-0" alt="Vector" src="https://c.animaapp.com/mi7tk9d8A2vM04/img/vector.svg" />
-                      <img className="absolute w-[38.89%] h-[38.08%] top-[7.69%] left-[5.56%]" alt="Vector" src="https://c.animaapp.com/mi7tk9d8A2vM04/img/vector-2.svg" />
-                    </div>
-                    <ChevronDownIcon className="w-8 h-8" />
-                  </div>
-                  <span className="[font-family:'Poppins',Helvetica] font-normal text-[#111111] text-2xl leading-normal">
-                    +1
-                  </span>
-                </div>
-              </div>
-            </div>
+            {/* Phone number removed — not used */}
 
             <div className="flex flex-col gap-[5.33px]">
               <div className="flex items-center justify-between">

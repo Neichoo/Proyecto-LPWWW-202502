@@ -15,6 +15,9 @@ import models
 # Ensure tables exist
 models.Base.metadata.create_all(bind=engine)
 
+# Base path for local images (relative to Frontend/public)
+IMAGE_BASE = "/"  # El frontend servirá estas rutas directamente
+
 
 def get_or_create_category(db: Session, name: str, slug: str) -> models.Category:
     cat = db.query(models.Category).filter_by(slug=slug).first()
@@ -82,13 +85,14 @@ def run():
         cat_bebidas = get_or_create_category(db, "Bebidas", "bebidas")
         cat_salsas = get_or_create_category(db, "Salsas", "salsas")
 
+        # Productos Sushi
         rolls = [
-          ("California Roll", 4500, "Arroz, alga nori, cangrejo, palta, pepino.", "https://c.animaapp.com/mgy9hocl11ZIi8/img/image-14.png", "california-roll"),
-          ("Spicy Tuna Roll", 5500, "Arroz, alga nori, atún picante, pepino, cebollín.", "https://c.animaapp.com/mgy9hocl11ZIi8/img/image-14.png", "spicy-tuna-roll"),
-          ("Philadelphia Roll", 5000, "Arroz, alga nori, salmón, queso crema, palta.", "https://c.animaapp.com/mgy9hocl11ZIi8/img/image-14.png", "philadelphia-roll"),
-          ("Tempura Shrimp Roll", 6000, "Arroz, alga nori, camarón tempura, palta, mayo spicy.", "https://c.animaapp.com/mgy9hocl11ZIi8/img/image-14.png", "tempura-shrimp-roll"),
-          ("Dragon Roll", 6500, "Arroz, alga nori, anguila, pepino, palta, salsa unagi.", "https://c.animaapp.com/mgy9hocl11ZIi8/img/image-14.png", "dragon-roll"),
-          ("Crunchy Roll", 6000, "Arroz, alga nori, cangrejo, palta, tempura flakes.", "https://c.animaapp.com/mgy9hocl11ZIi8/img/image-14.png", "crunchy-roll"),
+            ("California Roll", 4500, "Arroz, alga nori, cangrejo, palta, pepino.", "california_roll.jpg", "california-roll"),
+            ("Spicy Tuna Roll", 5500, "Arroz, alga nori, atún picante, pepino, cebollín.", "SpicyTuna_roll.jpg", "spicy-tuna-roll"),
+            ("Philadelphia Roll", 5000, "Arroz, alga nori, salmón, queso crema, palta.", "Philadelphia_roll.jpg", "philadelphia-roll"),
+            ("Tempura Shrimp Roll", 6000, "Arroz, alga nori, camarón tempura, palta, mayo spicy.", "Tempura Shrimp Roll.jpg", "tempura-shrimp-roll"),
+            ("Dragon Roll", 6500, "Arroz, alga nori, anguila, pepino, palta, salsa unagi.", "DragonRoll.jpg", "dragon-roll"),
+            ("Crunchy Roll", 6000, "Arroz, alga nori, cangrejo, palta, tempura flakes.", "Crunchy Roll.jpg", "crunchy-roll"),
         ]
         for title, price, ingredients, image, slug in rolls:
             get_or_create_product(
@@ -98,14 +102,15 @@ def run():
                 category_id=cat_sushi.id,
                 description=ingredients,
                 ingredients=ingredients,
-                image=image,
+                image=IMAGE_BASE + image,
                 slug=slug,
             )
 
+        # Bebidas
         bebidas = [
-            ("Té verde frío", 1500, "Agua, hojas de té verde, azúcar, hielo.", "https://c.animaapp.com/mgy9hocl11ZIi8/img/image-3.png", "te-verde-frio"),
-            ("Cerveza Japonesa", 3000, "Agua, malta, lúpulo, levadura.", "https://c.animaapp.com/mgy9hocl11ZIi8/img/image-4.png", "cerveza-japonesa"),
-            ("Lychee Soda", 2000, "Agua carbonatada, extracto de lichi, azúcar.", "https://c.animaapp.com/mgy9hocl11ZIi8/img/image-5.png", "lychee-soda"),
+            ("Té verde frío", 1500, "Agua, hojas de té verde, azúcar, hielo.", "Te verde frio.jpg", "te-verde-frio"),
+            ("Cerveza Japonesa", 3000, "Agua, malta, lúpulo, levadura.", "Cerveza Japonesa.jpg", "cerveza-japonesa"),
+            ("Lychee Soda", 2000, "Agua carbonatada, extracto de lichi, azúcar.", "Lychee Soda.jpg", "lychee-soda"),
         ]
         for title, price, desc, image, slug in bebidas:
             get_or_create_product(
@@ -115,14 +120,15 @@ def run():
                 category_id=cat_bebidas.id,
                 description=desc,
                 ingredients=desc,
-                image=image,
+                image=IMAGE_BASE + image,
                 slug=slug,
             )
 
+        # Salsas
         salsas = [
-            ("Salsa Soja Premium", 1500, "Soja fermentada, trigo, sal, conservante natural.", "https://c.animaapp.com/mgy9hocl11ZIi8/img/image-8.png", "salsa-soja"),
-            ("Salsa Spicy Mayo", 2000, "Mayonesa y pasta de ají picante.", "https://c.animaapp.com/mgy9hocl11ZIi8/img/image-8.png", "salsa-spicy-mayo"),
-            ("Salsa Unagi", 2500, "Salsa de soja, azúcar, mirin, maicena.", "https://c.animaapp.com/mgy9hocl11ZIi8/img/image-8.png", "salsa-unagi"),
+            ("Salsa Soja Premium", 1500, "Soja fermentada, trigo, sal, conservante natural.", "Salsa Soja premium.jpg", "salsa-soja"),
+            ("Salsa Spicy Mayo", 2000, "Mayonesa y pasta de ají picante.", "Salsa Spicy Mayo.jpg", "salsa-spicy-mayo"),
+            ("Salsa Unagi", 2500, "Salsa de soja, azúcar, mirin, maicena.", "Salsa Unagi.jpg", "salsa-unagi"),
         ]
         for title, price, desc, image, slug in salsas:
             get_or_create_product(
@@ -132,7 +138,7 @@ def run():
                 category_id=cat_salsas.id,
                 description=desc,
                 ingredients=desc,
-                image=image,
+                image=IMAGE_BASE + image,
                 slug=slug,
             )
 

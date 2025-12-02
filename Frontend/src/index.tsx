@@ -30,8 +30,9 @@ import { Administrador as AdministradorCompras } from "./screens/AdministradorCo
 import { CajaOnline } from "./screens/CajaOnline/CajaOnline";
 import { CarritoDeCompras } from "./screens/CarritoDeCompras/CarritoDeCompras";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import RequireAdmin from "./lib/RequireAdmin";
 import { ToastContainer } from "./components/ui/ToastContainer";
-
+import { Administrador as AdministradorUsuarios } from "./screens/AdministradorUsuarios/Administrador";
 createRoot(document.getElementById("app") as HTMLElement).render(
   <StrictMode>
     <div className="app-viewport">
@@ -46,10 +47,13 @@ createRoot(document.getElementById("app") as HTMLElement).render(
           <Route path="/despacho" element={<Despacho />} />
           <Route path="/contacto" element={<Contacto />} />
           <Route path="/admin" element={<Admin />} />
-          <Route path="/administrador" element={<Administrador />} />
-          <Route path="/administrador-compras" element={<AdministradorCompras />} />
+          <Route element={<RequireAdmin />}>
+            <Route path="/administrador" element={<Administrador />} />
+            <Route path="/administrador-compras" element={<AdministradorCompras />} />
+          </Route>
           <Route path="/caja-online" element={<CajaOnline />} />
           <Route path="/carrito" element={<CarritoDeCompras />} />
+          <Route path="/administrador-usuarios" element={<AdministradorUsuarios />} />
         </Routes>
       </BrowserRouter>
     </div>

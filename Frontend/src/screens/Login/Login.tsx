@@ -25,14 +25,28 @@ export const Login = (): JSX.Element => {
       const resp = await postFormUrlEncoded("/api/auth/login", { username: loginUsername, password });
       if (resp.ok && resp.data.access_token) {
         const token = resp.data.access_token;
+        const user = resp.data.user;
         if (remember) {
           localStorage.setItem("token", token);
+          localStorage.setItem("user", JSON.stringify(user));
         } else {
           sessionStorage.setItem("token", token);
+          sessionStorage.setItem("user", JSON.stringify(user));
         }
-        // opcional: validar token
-        await getJson("/api/auth/me");
-        window.location.href = "/";
+        // already have user info from login response; redirect according to role
+        if (user && user.role === "admin") {
+          // admins (and cajero if desired) go to admin console
+          window.location.href = "/admin";
+        } 
+        else if (user && user.role === "cajero") {
+          window.location.href = "/caja-online";
+        }
+        else if (user && user.role === "delivery") {
+          window.location.href = "/despacho";
+        }
+        else {
+          window.location.href = "/";
+        }
       } else {
         setError((resp.data && (resp.data.detail || resp.data.message)) || "Login failed");
       }

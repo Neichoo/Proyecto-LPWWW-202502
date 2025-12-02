@@ -8,6 +8,7 @@ from fastapi import Depends, HTTPException
 from fastapi.security import OAuth2PasswordBearer
 from sqlalchemy.orm import Session
 import crud
+import models
 from database import SessionLocal
 
 SECRET_KEY = os.getenv("SECRET_KEY", "change-me-secret")
@@ -69,4 +70,14 @@ def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(
     user = crud.get_user_by_username(db, username=username)
     if not user:
         raise HTTPException(status_code=401, detail="User not found")
+    return user
+
+
+def require_admin(user: models.User = Depends(get_current_user)):
+    """Dependency to require admin role for endpoints.
+
+    Raises HTTPException 403 if the current user is not an admin.
+    """
+    if getattr(user, "role", "cliente") != "admin":
+        raise HTTPException(status_code=403, detail="Admin privileges required")
     return user

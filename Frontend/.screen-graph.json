@@ -84,111 +84,79 @@
   ],
   "edges": [
     {
-      "id": "src\\screens\\LandingPage\\sections\\NavbarSection\\NavbarSection.tsx:16:10-to-src\\screens\\LandingPage\\LandingPage.tsx",
-      "source": "src\\screens\\LandingPage\\LandingPage.tsx",
-      "target": "src\\screens\\LandingPage\\LandingPage.tsx",
-      "data": {
-        "viaRoute": "/",
-        "trigger": {
-          "element": "<Link to=\"/\" className=\"flex items-center gap-3\">\n            <img\n              className=\"w-[135px] h-[101px] rounded-[50.59px] object-cover\"\n              alt=\"Icono\"\n              src=\"https://c.animaapp.com/mgy9hocl11ZIi8/img/icono-1.png\"\n            />\n            <h1 className=\"[font-family:'Roboto',Helvetica] font-medium text-[#fefdfe] text-[32px] tracking-[0] leading-[48px] whitespace-nowrap\">\n              Fukusuke\n            </h1>\n          </Link>",
-          "line": 16,
-          "endLine": 25,
-          "column": 10,
-          "endColumn": 17,
-          "sourceFile": "src\\screens\\LandingPage\\sections\\NavbarSection\\NavbarSection.tsx"
-        }
-      }
-    },
-    {
-      "id": "src\\screens\\LandingPage\\sections\\NavbarSection\\NavbarSection.tsx:29:10-to-src\\screens\\CarritoDeCompras\\CarritoDeCompras.tsx",
-      "source": "src\\screens\\LandingPage\\LandingPage.tsx",
-      "target": "src\\screens\\CarritoDeCompras\\CarritoDeCompras.tsx",
-      "data": {
-        "viaRoute": "/carrito",
-        "trigger": {
-          "element": "<Link to=\"/carrito\" className=\"relative w-[43.99px] h-[43.99px] transition-transform hover:scale-110\">\n            <ShoppingCartIcon\n              className=\"w-full h-full text-[#fefdfe]\"\n              strokeWidth={1.5}\n            />\n          </Link>",
-          "line": 29,
-          "endLine": 34,
-          "column": 10,
-          "endColumn": 17,
-          "sourceFile": "src\\screens\\LandingPage\\sections\\NavbarSection\\NavbarSection.tsx"
-        }
-      }
-    },
-    {
-      "id": "src\\screens\\LandingPage\\sections\\NavbarSection\\NavbarSection.tsx:46:10-to-src\\screens\\Login\\Login.tsx",
+      "id": "src\\components\\navigation\\MainNavbar.tsx:29:4-to-src\\screens\\Login\\Login.tsx",
       "source": "src\\screens\\LandingPage\\LandingPage.tsx",
       "target": "src\\screens\\Login\\Login.tsx",
       "data": {
         "viaRoute": "/login",
         "trigger": {
-          "element": "<Link to=\"/login\">\n            <Button className=\"h-auto bg-[#27686b] hover:bg-[#1f5457] text-[#fefdfe] px-[35.19px] py-[20.53px] rounded-[11.73px] shadow-[0px_1.47px_2.93px_#0000000d] [font-family:'Inter',Helvetica] font-medium text-[23.5px] leading-[35.2px] transition-transform hover:scale-105\">\n              Login\n            </Button>\n          </Link>",
-          "line": 46,
-          "endLine": 50,
-          "column": 10,
-          "endColumn": 17,
-          "sourceFile": "src\\screens\\LandingPage\\sections\\NavbarSection\\NavbarSection.tsx"
+          "element": "navigate(\"/login\")",
+          "line": 29,
+          "endLine": 29,
+          "column": 4,
+          "endColumn": 22,
+          "sourceFile": "src\\components\\navigation\\MainNavbar.tsx"
         }
       }
     },
     {
-      "id": "src\\screens\\Login\\Login.tsx:50:10-to-src\\screens\\LandingPage\\LandingPage.tsx",
-      "source": "src\\screens\\Login\\Login.tsx",
+      "id": "src\\components\\navigation\\MainNavbar.tsx:35:8-to-src\\screens\\LandingPage\\LandingPage.tsx",
+      "source": "src\\screens\\LandingPage\\LandingPage.tsx",
       "target": "src\\screens\\LandingPage\\LandingPage.tsx",
       "data": {
         "viaRoute": "/",
         "trigger": {
-          "element": "<Link to=\"/\" className=\"flex items-center gap-3\">\n            <img\n              className=\"w-[135px] h-[100px] rounded-[50.59px] object-cover\"\n              alt=\"Icono\"\n              src=\"https://c.animaapp.com/mi7thhexUlRvcK/img/icono-1.png\"\n            />\n            <h1 className=\"[font-family:'Inter',Helvetica] font-medium text-[#fefdfe] text-[32px] leading-[48px] whitespace-nowrap\">\n              Fukusuke\n            </h1>\n          </Link>",
-          "line": 50,
-          "endLine": 59,
-          "column": 10,
-          "endColumn": 17,
-          "sourceFile": "src\\screens\\Login\\Login.tsx"
+          "element": "<Link to=\"/\" className=\"flex items-center gap-3\">\r\n          <img\r\n            className=\"w-[110px] h-[82px] rounded-[36px] object-cover\"\r\n            alt=\"Icono\"\r\n            src=\"https://c.animaapp.com/mgy9hocl11ZIi8/img/icono-1.png\"\r\n          />\r\n          <span className=\"[font-family:'Roboto',Helvetica] font-semibold text-[#fefdfe] text-[20px] leading-[28px] whitespace-nowrap\">\r\n            Fukusuke\r\n          </span>\r\n        </Link>",
+          "line": 35,
+          "endLine": 44,
+          "column": 8,
+          "endColumn": 15,
+          "sourceFile": "src\\components\\navigation\\MainNavbar.tsx"
         }
       }
     },
     {
-      "id": "src\\screens\\Login\\Login.tsx:63:10-to-src\\screens\\CarritoDeCompras\\CarritoDeCompras.tsx",
-      "source": "src\\screens\\Login\\Login.tsx",
+      "id": "src\\components\\navigation\\MainNavbar.tsx:47:10-to-src\\screens\\CarritoDeCompras\\CarritoDeCompras.tsx",
+      "source": "src\\screens\\LandingPage\\LandingPage.tsx",
       "target": "src\\screens\\CarritoDeCompras\\CarritoDeCompras.tsx",
       "data": {
         "viaRoute": "/carrito",
         "trigger": {
-          "element": "<Link to=\"/carrito\" className=\"h-auto w-auto p-0\">\n            <Button\n              variant=\"ghost\"\n              size=\"icon\"\n              className=\"h-auto w-auto p-0 hover:bg-transparent\"\n              aria-label=\"Shopping cart\"\n            >\n              <ShoppingCartIcon className=\"w-[43.99px] h-[43.99px] text-[#fefdfe]\" />\n            </Button>\n          </Link>",
-          "line": 63,
-          "endLine": 72,
+          "element": "<Link to=\"/carrito\" className=\"w-8 h-8 transition-transform hover:scale-110\" aria-label=\"Shopping cart\">\r\n            <ShoppingCartIcon className=\"w-full h-full text-[#fefdfe]\" strokeWidth={1.5} />\r\n          </Link>",
+          "line": 47,
+          "endLine": 49,
           "column": 10,
           "endColumn": 17,
-          "sourceFile": "src\\screens\\Login\\Login.tsx"
+          "sourceFile": "src\\components\\navigation\\MainNavbar.tsx"
         }
       }
     },
     {
-      "id": "src\\screens\\Login\\Login.tsx:85:10-to-src\\screens\\SignUp\\SignUp.tsx",
+      "id": "src\\components\\navigation\\MainNavbar.tsx:70:12-to-src\\screens\\Login\\Login.tsx",
+      "source": "src\\screens\\LandingPage\\LandingPage.tsx",
+      "target": "src\\screens\\Login\\Login.tsx",
+      "data": {
+        "viaRoute": "/login",
+        "trigger": {
+          "element": "<Link to=\"/login\">\r\n              <Button className=\"h-auto bg-[#27686b] hover:bg-[#1f5457] text-[#fefdfe] px-5 py-2.5 rounded-[10px] shadow-[0px_1.47px_2.93px_#0000000d] [font-family:'Inter',Helvetica] font-semibold text-[16px] leading-[24px] transition-transform hover:scale-105\">\r\n                Login\r\n              </Button>\r\n            </Link>",
+          "line": 70,
+          "endLine": 74,
+          "column": 12,
+          "endColumn": 19,
+          "sourceFile": "src\\components\\navigation\\MainNavbar.tsx"
+        }
+      }
+    },
+    {
+      "id": "src\\screens\\Login\\Login.tsx:167:18-to-src\\screens\\SignUp\\SignUp.tsx",
       "source": "src\\screens\\Login\\Login.tsx",
       "target": "src\\screens\\SignUp\\SignUp.tsx",
       "data": {
         "viaRoute": "/signup",
         "trigger": {
-          "element": "<Link to=\"/signup\">\n            <Button className=\"h-auto bg-[#27686b] hover:bg-[#1f5558] rounded-[11.73px] shadow-[0px_1.47px_2.93px_#0000000d] px-[35.19px] py-[20.53px] [font-family:'Inter',Helvetica] font-medium text-[#fefdfe] text-[23.5px] leading-[35.2px]\">\n              Login\n            </Button>\n          </Link>",
-          "line": 85,
-          "endLine": 89,
-          "column": 10,
-          "endColumn": 17,
-          "sourceFile": "src\\screens\\Login\\Login.tsx"
-        }
-      }
-    },
-    {
-      "id": "src\\screens\\Login\\Login.tsx:207:18-to-src\\screens\\SignUp\\SignUp.tsx",
-      "source": "src\\screens\\Login\\Login.tsx",
-      "target": "src\\screens\\SignUp\\SignUp.tsx",
-      "data": {
-        "viaRoute": "/signup",
-        "trigger": {
-          "element": "<Link to=\"/signup\">\n                    <Button\n                      variant=\"link\"\n                      className=\"h-auto p-0 [font-family:'Roboto',Helvetica] font-medium text-[#111111] text-[21.5px] leading-normal underline\"\n                    >\n                      Sign up\n                    </Button>\n                  </Link>",
-          "line": 207,
-          "endLine": 214,
+          "element": "<Link to=\"/signup\">\r\n                    <Button variant=\"link\" className=\"h-auto p-0 [font-family:'Roboto',Helvetica] font-medium text-[#111111] text-[16px] leading-normal underline\">\r\n                      Sign up\r\n                    </Button>\r\n                  </Link>",
+          "line": 167,
+          "endLine": 171,
           "column": 18,
           "endColumn": 25,
           "sourceFile": "src\\screens\\Login\\Login.tsx"
@@ -196,63 +164,143 @@
       }
     },
     {
-      "id": "src\\screens\\SignUp\\sections\\NavbarSection\\NavbarSection.tsx:16:10-to-src\\screens\\LandingPage\\LandingPage.tsx",
-      "source": "src\\screens\\SignUp\\SignUp.tsx",
+      "id": "src\\components\\navigation\\MainNavbar.tsx:29:4-to-src\\screens\\Login\\Login.tsx",
+      "source": "src\\screens\\LandingPage\\LandingPage.tsx",
+      "target": "src\\screens\\Login\\Login.tsx",
+      "data": {
+        "viaRoute": "/login",
+        "trigger": {
+          "element": "navigate(\"/login\")",
+          "line": 29,
+          "endLine": 29,
+          "column": 4,
+          "endColumn": 22,
+          "sourceFile": "src\\components\\navigation\\MainNavbar.tsx"
+        }
+      }
+    },
+    {
+      "id": "src\\components\\navigation\\MainNavbar.tsx:35:8-to-src\\screens\\LandingPage\\LandingPage.tsx",
+      "source": "src\\screens\\LandingPage\\LandingPage.tsx",
       "target": "src\\screens\\LandingPage\\LandingPage.tsx",
       "data": {
         "viaRoute": "/",
         "trigger": {
-          "element": "<Link to=\"/\" className=\"flex items-center gap-3\">\n            <img\n              className=\"w-[135px] h-[100px] rounded-[50.59px] object-cover\"\n              alt=\"Icono\"\n              src=\"https://c.animaapp.com/mi7tk9d8A2vM04/img/icono-1.png\"\n            />\n            <h1 className=\"[font-family:'Roboto',Helvetica] font-medium text-[#fefdfe] text-[32px] tracking-[0] leading-[48px] whitespace-nowrap\">\n              Fukusuke\n            </h1>\n          </Link>",
-          "line": 16,
-          "endLine": 25,
-          "column": 10,
-          "endColumn": 17,
-          "sourceFile": "src\\screens\\SignUp\\sections\\NavbarSection\\NavbarSection.tsx"
+          "element": "<Link to=\"/\" className=\"flex items-center gap-3\">\r\n          <img\r\n            className=\"w-[110px] h-[82px] rounded-[36px] object-cover\"\r\n            alt=\"Icono\"\r\n            src=\"https://c.animaapp.com/mgy9hocl11ZIi8/img/icono-1.png\"\r\n          />\r\n          <span className=\"[font-family:'Roboto',Helvetica] font-semibold text-[#fefdfe] text-[20px] leading-[28px] whitespace-nowrap\">\r\n            Fukusuke\r\n          </span>\r\n        </Link>",
+          "line": 35,
+          "endLine": 44,
+          "column": 8,
+          "endColumn": 15,
+          "sourceFile": "src\\components\\navigation\\MainNavbar.tsx"
         }
       }
     },
     {
-      "id": "src\\screens\\SignUp\\sections\\NavbarSection\\NavbarSection.tsx:29:10-to-src\\screens\\CarritoDeCompras\\CarritoDeCompras.tsx",
-      "source": "src\\screens\\SignUp\\SignUp.tsx",
+      "id": "src\\components\\navigation\\MainNavbar.tsx:47:10-to-src\\screens\\CarritoDeCompras\\CarritoDeCompras.tsx",
+      "source": "src\\screens\\LandingPage\\LandingPage.tsx",
       "target": "src\\screens\\CarritoDeCompras\\CarritoDeCompras.tsx",
       "data": {
         "viaRoute": "/carrito",
         "trigger": {
-          "element": "<Link to=\"/carrito\" className=\"transition-opacity hover:opacity-80\" aria-label=\"Shopping cart\">\n            <ShoppingCartIcon className=\"w-[43.99px] h-[43.99px] text-[#fefdfe]\" />\n          </Link>",
-          "line": 29,
-          "endLine": 31,
-          "column": 10,
-          "endColumn": 17,
-          "sourceFile": "src\\screens\\SignUp\\sections\\NavbarSection\\NavbarSection.tsx"
-        }
-      }
-    },
-    {
-      "id": "src\\screens\\SignUp\\sections\\NavbarSection\\NavbarSection.tsx:43:10-to-src\\screens\\Login\\Login.tsx",
-      "source": "src\\screens\\SignUp\\SignUp.tsx",
-      "target": "src\\screens\\Login\\Login.tsx",
-      "data": {
-        "viaRoute": "/login",
-        "trigger": {
-          "element": "<Link to=\"/login\">\n            <Button className=\"bg-[#27686b] hover:bg-[#1f5457] text-[#fefdfe] rounded-[11.73px] shadow-[0px_1.47px_2.93px_#0000000d] px-[35.19px] py-[20.53px] h-auto transition-colors\">\n              <span className=\"[font-family:'Inter',Helvetica] font-medium text-[23.5px] tracking-[0] leading-[35.2px]\">\n                Login\n              </span>\n            </Button>\n          </Link>",
-          "line": 43,
+          "element": "<Link to=\"/carrito\" className=\"w-8 h-8 transition-transform hover:scale-110\" aria-label=\"Shopping cart\">\r\n            <ShoppingCartIcon className=\"w-full h-full text-[#fefdfe]\" strokeWidth={1.5} />\r\n          </Link>",
+          "line": 47,
           "endLine": 49,
           "column": 10,
           "endColumn": 17,
-          "sourceFile": "src\\screens\\SignUp\\sections\\NavbarSection\\NavbarSection.tsx"
+          "sourceFile": "src\\components\\navigation\\MainNavbar.tsx"
         }
       }
     },
     {
-      "id": "src\\screens\\SignUp\\sections\\SignUpSection\\SignUpSection.tsx:191:14-to-src\\screens\\Login\\Login.tsx",
+      "id": "src\\components\\navigation\\MainNavbar.tsx:70:12-to-src\\screens\\Login\\Login.tsx",
+      "source": "src\\screens\\LandingPage\\LandingPage.tsx",
+      "target": "src\\screens\\Login\\Login.tsx",
+      "data": {
+        "viaRoute": "/login",
+        "trigger": {
+          "element": "<Link to=\"/login\">\r\n              <Button className=\"h-auto bg-[#27686b] hover:bg-[#1f5457] text-[#fefdfe] px-5 py-2.5 rounded-[10px] shadow-[0px_1.47px_2.93px_#0000000d] [font-family:'Inter',Helvetica] font-semibold text-[16px] leading-[24px] transition-transform hover:scale-105\">\r\n                Login\r\n              </Button>\r\n            </Link>",
+          "line": 70,
+          "endLine": 74,
+          "column": 12,
+          "endColumn": 19,
+          "sourceFile": "src\\components\\navigation\\MainNavbar.tsx"
+        }
+      }
+    },
+    {
+      "id": "src\\components\\navigation\\MainNavbar.tsx:29:4-to-src\\screens\\Login\\Login.tsx",
+      "source": "src\\screens\\LandingPage\\LandingPage.tsx",
+      "target": "src\\screens\\Login\\Login.tsx",
+      "data": {
+        "viaRoute": "/login",
+        "trigger": {
+          "element": "navigate(\"/login\")",
+          "line": 29,
+          "endLine": 29,
+          "column": 4,
+          "endColumn": 22,
+          "sourceFile": "src\\components\\navigation\\MainNavbar.tsx"
+        }
+      }
+    },
+    {
+      "id": "src\\components\\navigation\\MainNavbar.tsx:35:8-to-src\\screens\\LandingPage\\LandingPage.tsx",
+      "source": "src\\screens\\LandingPage\\LandingPage.tsx",
+      "target": "src\\screens\\LandingPage\\LandingPage.tsx",
+      "data": {
+        "viaRoute": "/",
+        "trigger": {
+          "element": "<Link to=\"/\" className=\"flex items-center gap-3\">\r\n          <img\r\n            className=\"w-[110px] h-[82px] rounded-[36px] object-cover\"\r\n            alt=\"Icono\"\r\n            src=\"https://c.animaapp.com/mgy9hocl11ZIi8/img/icono-1.png\"\r\n          />\r\n          <span className=\"[font-family:'Roboto',Helvetica] font-semibold text-[#fefdfe] text-[20px] leading-[28px] whitespace-nowrap\">\r\n            Fukusuke\r\n          </span>\r\n        </Link>",
+          "line": 35,
+          "endLine": 44,
+          "column": 8,
+          "endColumn": 15,
+          "sourceFile": "src\\components\\navigation\\MainNavbar.tsx"
+        }
+      }
+    },
+    {
+      "id": "src\\components\\navigation\\MainNavbar.tsx:47:10-to-src\\screens\\CarritoDeCompras\\CarritoDeCompras.tsx",
+      "source": "src\\screens\\LandingPage\\LandingPage.tsx",
+      "target": "src\\screens\\CarritoDeCompras\\CarritoDeCompras.tsx",
+      "data": {
+        "viaRoute": "/carrito",
+        "trigger": {
+          "element": "<Link to=\"/carrito\" className=\"w-8 h-8 transition-transform hover:scale-110\" aria-label=\"Shopping cart\">\r\n            <ShoppingCartIcon className=\"w-full h-full text-[#fefdfe]\" strokeWidth={1.5} />\r\n          </Link>",
+          "line": 47,
+          "endLine": 49,
+          "column": 10,
+          "endColumn": 17,
+          "sourceFile": "src\\components\\navigation\\MainNavbar.tsx"
+        }
+      }
+    },
+    {
+      "id": "src\\components\\navigation\\MainNavbar.tsx:70:12-to-src\\screens\\Login\\Login.tsx",
+      "source": "src\\screens\\LandingPage\\LandingPage.tsx",
+      "target": "src\\screens\\Login\\Login.tsx",
+      "data": {
+        "viaRoute": "/login",
+        "trigger": {
+          "element": "<Link to=\"/login\">\r\n              <Button className=\"h-auto bg-[#27686b] hover:bg-[#1f5457] text-[#fefdfe] px-5 py-2.5 rounded-[10px] shadow-[0px_1.47px_2.93px_#0000000d] [font-family:'Inter',Helvetica] font-semibold text-[16px] leading-[24px] transition-transform hover:scale-105\">\r\n                Login\r\n              </Button>\r\n            </Link>",
+          "line": 70,
+          "endLine": 74,
+          "column": 12,
+          "endColumn": 19,
+          "sourceFile": "src\\components\\navigation\\MainNavbar.tsx"
+        }
+      }
+    },
+    {
+      "id": "src\\screens\\SignUp\\sections\\SignUpSection\\SignUpSection.tsx:179:14-to-src\\screens\\Login\\Login.tsx",
       "source": "src\\screens\\SignUp\\SignUp.tsx",
       "target": "src\\screens\\Login\\Login.tsx",
       "data": {
         "viaRoute": "/login",
         "trigger": {
-          "element": "<Link to=\"/login\" className=\"text-[#111111] underline transition-opacity hover:opacity-80\">\n                Log in\n              </Link>",
-          "line": 191,
-          "endLine": 193,
+          "element": "<Link to=\"/login\" className=\"text-[#111111] underline transition-opacity hover:opacity-80\">\r\n                Log in\r\n              </Link>",
+          "line": 179,
+          "endLine": 181,
           "column": 14,
           "endColumn": 21,
           "sourceFile": "src\\screens\\SignUp\\sections\\SignUpSection\\SignUpSection.tsx"
@@ -260,95 +308,143 @@
       }
     },
     {
-      "id": "src\\screens\\Locales\\Locales.tsx:34:10-to-src\\screens\\LandingPage\\LandingPage.tsx",
-      "source": "src\\screens\\Locales\\Locales.tsx",
+      "id": "src\\components\\navigation\\MainNavbar.tsx:29:4-to-src\\screens\\Login\\Login.tsx",
+      "source": "src\\screens\\LandingPage\\LandingPage.tsx",
+      "target": "src\\screens\\Login\\Login.tsx",
+      "data": {
+        "viaRoute": "/login",
+        "trigger": {
+          "element": "navigate(\"/login\")",
+          "line": 29,
+          "endLine": 29,
+          "column": 4,
+          "endColumn": 22,
+          "sourceFile": "src\\components\\navigation\\MainNavbar.tsx"
+        }
+      }
+    },
+    {
+      "id": "src\\components\\navigation\\MainNavbar.tsx:35:8-to-src\\screens\\LandingPage\\LandingPage.tsx",
+      "source": "src\\screens\\LandingPage\\LandingPage.tsx",
       "target": "src\\screens\\LandingPage\\LandingPage.tsx",
       "data": {
         "viaRoute": "/",
         "trigger": {
-          "element": "<Link to=\"/\" className=\"flex items-center gap-3\">\n            <img\n              className=\"w-[135px] h-[100px] rounded-[50.59px] object-cover\"\n              alt=\"Icono\"\n              src=\"https://c.animaapp.com/mi7tkxrdIM2BKY/img/icono-1.png\"\n            />\n            <h1 className=\"[font-family:'Roboto',Helvetica] font-medium text-[#fefdfe] text-[32px] leading-[48px] tracking-[0] whitespace-nowrap\">\n              Fukusuke\n            </h1>\n          </Link>",
-          "line": 34,
-          "endLine": 43,
-          "column": 10,
-          "endColumn": 17,
-          "sourceFile": "src\\screens\\Locales\\Locales.tsx"
+          "element": "<Link to=\"/\" className=\"flex items-center gap-3\">\r\n          <img\r\n            className=\"w-[110px] h-[82px] rounded-[36px] object-cover\"\r\n            alt=\"Icono\"\r\n            src=\"https://c.animaapp.com/mgy9hocl11ZIi8/img/icono-1.png\"\r\n          />\r\n          <span className=\"[font-family:'Roboto',Helvetica] font-semibold text-[#fefdfe] text-[20px] leading-[28px] whitespace-nowrap\">\r\n            Fukusuke\r\n          </span>\r\n        </Link>",
+          "line": 35,
+          "endLine": 44,
+          "column": 8,
+          "endColumn": 15,
+          "sourceFile": "src\\components\\navigation\\MainNavbar.tsx"
         }
       }
     },
     {
-      "id": "src\\screens\\Locales\\Locales.tsx:47:10-to-src\\screens\\CarritoDeCompras\\CarritoDeCompras.tsx",
-      "source": "src\\screens\\Locales\\Locales.tsx",
+      "id": "src\\components\\navigation\\MainNavbar.tsx:47:10-to-src\\screens\\CarritoDeCompras\\CarritoDeCompras.tsx",
+      "source": "src\\screens\\LandingPage\\LandingPage.tsx",
       "target": "src\\screens\\CarritoDeCompras\\CarritoDeCompras.tsx",
       "data": {
         "viaRoute": "/carrito",
         "trigger": {
-          "element": "<Link to=\"/carrito\" className=\"h-auto w-auto p-0\">\n            <Button\n              variant=\"ghost\"\n              size=\"icon\"\n              className=\"h-auto w-auto p-0 hover:bg-transparent\"\n              aria-label=\"Shopping cart\"\n            >\n              <ShoppingCartIcon className=\"w-[43.99px] h-[43.99px] text-white\" />\n            </Button>\n          </Link>",
+          "element": "<Link to=\"/carrito\" className=\"w-8 h-8 transition-transform hover:scale-110\" aria-label=\"Shopping cart\">\r\n            <ShoppingCartIcon className=\"w-full h-full text-[#fefdfe]\" strokeWidth={1.5} />\r\n          </Link>",
           "line": 47,
-          "endLine": 56,
+          "endLine": 49,
           "column": 10,
           "endColumn": 17,
-          "sourceFile": "src\\screens\\Locales\\Locales.tsx"
+          "sourceFile": "src\\components\\navigation\\MainNavbar.tsx"
         }
       }
     },
     {
-      "id": "src\\screens\\Locales\\Locales.tsx:68:10-to-src\\screens\\Login\\Login.tsx",
-      "source": "src\\screens\\Locales\\Locales.tsx",
+      "id": "src\\components\\navigation\\MainNavbar.tsx:70:12-to-src\\screens\\Login\\Login.tsx",
+      "source": "src\\screens\\LandingPage\\LandingPage.tsx",
       "target": "src\\screens\\Login\\Login.tsx",
       "data": {
         "viaRoute": "/login",
         "trigger": {
-          "element": "<Link to=\"/login\" className=\"h-auto\">\n            <Button className=\"h-auto bg-[#27686b] hover:bg-[#27686b]/90 rounded-[11.73px] shadow-[0px_1.47px_2.93px_#0000000d] px-[35.19px] py-[20.53px]\">\n              <span className=\"[font-family:'Inter',Helvetica] font-medium text-[#fefdfe] text-[23.5px] leading-[35.2px] tracking-[0]\">\n                Login\n              </span>\n            </Button>\n          </Link>",
-          "line": 68,
+          "element": "<Link to=\"/login\">\r\n              <Button className=\"h-auto bg-[#27686b] hover:bg-[#1f5457] text-[#fefdfe] px-5 py-2.5 rounded-[10px] shadow-[0px_1.47px_2.93px_#0000000d] [font-family:'Inter',Helvetica] font-semibold text-[16px] leading-[24px] transition-transform hover:scale-105\">\r\n                Login\r\n              </Button>\r\n            </Link>",
+          "line": 70,
           "endLine": 74,
-          "column": 10,
-          "endColumn": 17,
-          "sourceFile": "src\\screens\\Locales\\Locales.tsx"
+          "column": 12,
+          "endColumn": 19,
+          "sourceFile": "src\\components\\navigation\\MainNavbar.tsx"
         }
       }
     },
     {
-      "id": "src\\screens\\Contacto\\sections\\NavigationBarSection\\NavigationBarSection.tsx:27:10-to-src\\screens\\CarritoDeCompras\\CarritoDeCompras.tsx",
-      "source": "src\\screens\\Contacto\\Contacto.tsx",
+      "id": "src\\components\\navigation\\MainNavbar.tsx:29:4-to-src\\screens\\Login\\Login.tsx",
+      "source": "src\\screens\\LandingPage\\LandingPage.tsx",
+      "target": "src\\screens\\Login\\Login.tsx",
+      "data": {
+        "viaRoute": "/login",
+        "trigger": {
+          "element": "navigate(\"/login\")",
+          "line": 29,
+          "endLine": 29,
+          "column": 4,
+          "endColumn": 22,
+          "sourceFile": "src\\components\\navigation\\MainNavbar.tsx"
+        }
+      }
+    },
+    {
+      "id": "src\\components\\navigation\\MainNavbar.tsx:35:8-to-src\\screens\\LandingPage\\LandingPage.tsx",
+      "source": "src\\screens\\LandingPage\\LandingPage.tsx",
+      "target": "src\\screens\\LandingPage\\LandingPage.tsx",
+      "data": {
+        "viaRoute": "/",
+        "trigger": {
+          "element": "<Link to=\"/\" className=\"flex items-center gap-3\">\r\n          <img\r\n            className=\"w-[110px] h-[82px] rounded-[36px] object-cover\"\r\n            alt=\"Icono\"\r\n            src=\"https://c.animaapp.com/mgy9hocl11ZIi8/img/icono-1.png\"\r\n          />\r\n          <span className=\"[font-family:'Roboto',Helvetica] font-semibold text-[#fefdfe] text-[20px] leading-[28px] whitespace-nowrap\">\r\n            Fukusuke\r\n          </span>\r\n        </Link>",
+          "line": 35,
+          "endLine": 44,
+          "column": 8,
+          "endColumn": 15,
+          "sourceFile": "src\\components\\navigation\\MainNavbar.tsx"
+        }
+      }
+    },
+    {
+      "id": "src\\components\\navigation\\MainNavbar.tsx:47:10-to-src\\screens\\CarritoDeCompras\\CarritoDeCompras.tsx",
+      "source": "src\\screens\\LandingPage\\LandingPage.tsx",
       "target": "src\\screens\\CarritoDeCompras\\CarritoDeCompras.tsx",
       "data": {
         "viaRoute": "/carrito",
         "trigger": {
-          "element": "<Link to=\"/carrito\" className=\"relative w-[43.99px] h-[43.99px] transition-transform hover:scale-110\" aria-label=\"Shopping cart\">\n            <ShoppingCartIcon className=\"w-full h-full text-[#fefdfe]\" />\n          </Link>",
-          "line": 27,
-          "endLine": 29,
+          "element": "<Link to=\"/carrito\" className=\"w-8 h-8 transition-transform hover:scale-110\" aria-label=\"Shopping cart\">\r\n            <ShoppingCartIcon className=\"w-full h-full text-[#fefdfe]\" strokeWidth={1.5} />\r\n          </Link>",
+          "line": 47,
+          "endLine": 49,
           "column": 10,
           "endColumn": 17,
-          "sourceFile": "src\\screens\\Contacto\\sections\\NavigationBarSection\\NavigationBarSection.tsx"
+          "sourceFile": "src\\components\\navigation\\MainNavbar.tsx"
         }
       }
     },
     {
-      "id": "src\\screens\\Contacto\\sections\\NavigationBarSection\\NavigationBarSection.tsx:41:10-to-src\\screens\\Login\\Login.tsx",
-      "source": "src\\screens\\Contacto\\Contacto.tsx",
+      "id": "src\\components\\navigation\\MainNavbar.tsx:70:12-to-src\\screens\\Login\\Login.tsx",
+      "source": "src\\screens\\LandingPage\\LandingPage.tsx",
       "target": "src\\screens\\Login\\Login.tsx",
       "data": {
         "viaRoute": "/login",
         "trigger": {
-          "element": "<Link to=\"/login\" className=\"h-auto\">\n            <Button className=\"h-auto bg-[#27686b] hover:bg-[#1f5457] text-[#fefdfe] rounded-[11.73px] shadow-[0px_1.47px_2.93px_#0000000d] px-[35.19px] py-[20.53px] [font-family:'Inter',Helvetica] font-medium text-[23.5px] leading-[35.2px] transition-transform hover:scale-105\">\n              Login\n            </Button>\n          </Link>",
-          "line": 41,
-          "endLine": 45,
-          "column": 10,
-          "endColumn": 17,
-          "sourceFile": "src\\screens\\Contacto\\sections\\NavigationBarSection\\NavigationBarSection.tsx"
+          "element": "<Link to=\"/login\">\r\n              <Button className=\"h-auto bg-[#27686b] hover:bg-[#1f5457] text-[#fefdfe] px-5 py-2.5 rounded-[10px] shadow-[0px_1.47px_2.93px_#0000000d] [font-family:'Inter',Helvetica] font-semibold text-[16px] leading-[24px] transition-transform hover:scale-105\">\r\n                Login\r\n              </Button>\r\n            </Link>",
+          "line": 70,
+          "endLine": 74,
+          "column": 12,
+          "endColumn": 19,
+          "sourceFile": "src\\components\\navigation\\MainNavbar.tsx"
         }
       }
     },
     {
-      "id": "src\\screens\\Admin\\Admin.tsx:34:10-to-src\\screens\\LandingPage\\LandingPage.tsx",
+      "id": "src\\screens\\Admin\\Admin.tsx:35:10-to-src\\screens\\LandingPage\\LandingPage.tsx",
       "source": "src\\screens\\Admin\\Admin.tsx",
       "target": "src\\screens\\LandingPage\\LandingPage.tsx",
       "data": {
         "viaRoute": "/",
         "trigger": {
-          "element": "<Link to=\"/\" className=\"flex items-center gap-3\">\n            <img\n              className=\"w-[135px] h-[100px] rounded-[50.59px] object-cover\"\n              alt=\"Icono\"\n              src=\"https://c.animaapp.com/mgy9tilnfTD9CM/img/icono-1.png\"\n            />\n            <h1 className=\"[font-family:'Roboto',Helvetica] font-medium text-[#fefdfe] text-[32px] leading-[48px]\">\n              Fukusuke\n            </h1>\n          </Link>",
-          "line": 34,
-          "endLine": 43,
+          "element": "<Link to=\"/\" className=\"flex items-center gap-3\">\r\n            <img\r\n              className=\"w-[135px] h-[100px] rounded-[50.59px] object-cover\"\r\n              alt=\"Icono\"\r\n              src=\"https://c.animaapp.com/mgy9tilnfTD9CM/img/icono-1.png\"\r\n            />\r\n            <h1 className=\"[font-family:'Roboto',Helvetica] font-medium text-[#fefdfe] text-[32px] leading-[48px]\">\r\n              Fukusuke\r\n            </h1>\r\n          </Link>",
+          "line": 35,
+          "endLine": 44,
           "column": 10,
           "endColumn": 17,
           "sourceFile": "src\\screens\\Admin\\Admin.tsx"
@@ -356,17 +452,49 @@
       }
     },
     {
-      "id": "src\\screens\\AdministradorCompras\\sections\\NavigationBarSection\\NavigationBarSection.tsx:16:10-to-src\\screens\\LandingPage\\LandingPage.tsx",
+      "id": "src\\screens\\Admin\\Admin.tsx:59:12-to-src\\screens\\LandingPage\\LandingPage.tsx",
+      "source": "src\\screens\\Admin\\Admin.tsx",
+      "target": "src\\screens\\LandingPage\\LandingPage.tsx",
+      "data": {
+        "viaRoute": "/",
+        "trigger": {
+          "element": "navigate(\"/\")",
+          "line": 59,
+          "endLine": 59,
+          "column": 12,
+          "endColumn": 25,
+          "sourceFile": "src\\screens\\Admin\\Admin.tsx"
+        }
+      }
+    },
+    {
+      "id": "src\\screens\\AdministradorCompras\\sections\\NavigationBarSection\\NavigationBarSection.tsx:17:10-to-src\\screens\\Admin\\Admin.tsx",
+      "source": "src\\screens\\AdministradorCompras\\Administrador.tsx",
+      "target": "src\\screens\\Admin\\Admin.tsx",
+      "data": {
+        "viaRoute": "/admin",
+        "trigger": {
+          "element": "<Link to=\"/admin\" className=\"flex items-center gap-3\">\r\n            <img\r\n              className=\"w-[135px] h-[100px] rounded-[50.59px] object-cover\"\r\n              alt=\"Icono\"\r\n              src=\"https://c.animaapp.com/mi7trcsqAboA6X/img/icono-1.png\"\r\n            />\r\n            <h1 className=\"[font-family:'Roboto',Helvetica] font-medium text-[#fefdfe] text-[32px] tracking-[0] leading-[48px] whitespace-nowrap\">\r\n              Fukusuke\r\n            </h1>\r\n          </Link>",
+          "line": 17,
+          "endLine": 26,
+          "column": 10,
+          "endColumn": 17,
+          "sourceFile": "src\\screens\\AdministradorCompras\\sections\\NavigationBarSection\\NavigationBarSection.tsx"
+        }
+      }
+    },
+    {
+      "id": "src\\screens\\AdministradorCompras\\sections\\NavigationBarSection\\NavigationBarSection.tsx:46:14-to-src\\screens\\LandingPage\\LandingPage.tsx",
       "source": "src\\screens\\AdministradorCompras\\Administrador.tsx",
       "target": "src\\screens\\LandingPage\\LandingPage.tsx",
       "data": {
         "viaRoute": "/",
         "trigger": {
-          "element": "<Link to=\"/\" className=\"flex items-center gap-3\">\n            <img\n              className=\"w-[135px] h-[100px] rounded-[50.59px] object-cover\"\n              alt=\"Icono\"\n              src=\"https://c.animaapp.com/mi7trcsqAboA6X/img/icono-1.png\"\n            />\n            <h1 className=\"[font-family:'Roboto',Helvetica] font-medium text-[#fefdfe] text-[32px] tracking-[0] leading-[48px] whitespace-nowrap\">\n              Fukusuke\n            </h1>\n          </Link>",
-          "line": 16,
-          "endLine": 25,
-          "column": 10,
-          "endColumn": 17,
+          "element": "navigate(\"/\")",
+          "line": 46,
+          "endLine": 46,
+          "column": 14,
+          "endColumn": 27,
           "sourceFile": "src\\screens\\AdministradorCompras\\sections\\NavigationBarSection\\NavigationBarSection.tsx"
         }
       }
@@ -378,7 +506,7 @@
       "data": {
         "viaRoute": "/",
         "trigger": {
-          "element": "<Link to=\"/\" className=\"flex items-center gap-3\">\n          <img\n            className=\"w-[135px] h-[100px] rounded-[50.59px] object-cover\"\n            alt=\"Icono\"\n            src=\"https://c.animaapp.com/mi7tcl3s84JVka/img/icono-1.png\"\n          />\n          <h1 className=\"[font-family:'Inter',Helvetica] font-medium text-[#fefdfe] text-[32px] leading-[48px] tracking-[0] whitespace-nowrap\">\n            Fukusuke\n          </h1>\n        </Link>",
+          "element": "<Link to=\"/\" className=\"flex items-center gap-3\">\r\n          <img\r\n            className=\"w-[135px] h-[100px] rounded-[50.59px] object-cover\"\r\n            alt=\"Icono\"\r\n            src=\"https://c.animaapp.com/mi7tcl3s84JVka/img/icono-1.png\"\r\n          />\r\n          <h1 className=\"[font-family:'Inter',Helvetica] font-medium text-[#fefdfe] text-[32px] leading-[48px] tracking-[0] whitespace-nowrap\">\r\n            Fukusuke\r\n          </h1>\r\n        </Link>",
           "line": 9,
           "endLine": 18,
           "column": 8,
@@ -388,15 +516,15 @@
       }
     },
     {
-      "id": "src\\screens\\CarritoDeCompras\\CarritoDeCompras.tsx:51:10-to-src\\screens\\LandingPage\\LandingPage.tsx",
+      "id": "src\\screens\\CarritoDeCompras\\CarritoDeCompras.tsx:87:10-to-src\\screens\\LandingPage\\LandingPage.tsx",
       "source": "src\\screens\\CarritoDeCompras\\CarritoDeCompras.tsx",
       "target": "src\\screens\\LandingPage\\LandingPage.tsx",
       "data": {
         "viaRoute": "/",
         "trigger": {
-          "element": "<Link to=\"/\" className=\"mb-6 p-0 h-auto hover:bg-transparent inline-flex items-center\">\n            <ArrowLeftIcon className=\"w-[30px] h-[30px] mr-2\" />\n            <span className=\"[font-family:'Roboto',Helvetica] font-semibold text-[#1e1e1e] text-lg\">\n              Continuar Comprando\n            </span>\n          </Link>",
-          "line": 51,
-          "endLine": 56,
+          "element": "<Link to=\"/\" className=\"mb-6 p-0 h-auto hover:bg-transparent inline-flex items-center\">\r\n            <ArrowLeftIcon className=\"w-[30px] h-[30px] mr-2\" />\r\n            <span className=\"[font-family:'Roboto',Helvetica] font-semibold text-[#1e1e1e] text-lg\">\r\n              Seguir comprando\r\n            </span>\r\n          </Link>",
+          "line": 87,
+          "endLine": 92,
           "column": 10,
           "endColumn": 17,
           "sourceFile": "src\\screens\\CarritoDeCompras\\CarritoDeCompras.tsx"

@@ -1,10 +1,9 @@
-
 import { Button } from "../../../../components/ui/button";
 import { Link, useNavigate } from "react-router-dom";
 
 const navigationItems = [
-  { label: "Administrar Usuarios", path: "/administrador-usuarios", active: true },
-  { label: "Administrar Compras", path: "/administrador-compras", active: false },
+  { label: "Administrar Usuarios", path: "/administrador-usuarios", active: false },
+  { label: "Administrar Compras", path: "/administrador-compras", active: true },
   { label: "Administrar Productos", path: "/administrador", active: true },
 ];
 

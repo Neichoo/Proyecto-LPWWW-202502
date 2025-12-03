@@ -20,6 +20,7 @@ type Product = {
   ingredients?: string;
   image?: string;
   image_url?: string;
+  is_available?: boolean;
 };
 
 const fallbackSlides = [
@@ -98,19 +99,38 @@ export const LandingPage = (): JSX.Element => {
     const fetchCategory = async (slug: string, setter: (p: Product[]) => void) => {
       const res = await getJson(`/api/categories/${slug}/products`);
       if (res.ok) {
-        const data = mapLocalImages(res.data as Product[]);
-        setter(data);
+        // Normalizar is_available a booleano
+        const data = (res.data as Product[]).map((p) => ({
+          ...p,
+          is_available: p.is_available === true
+        }));
+
+        // Filtrar solo los disponibles
+        const availableData = data.filter((p) => p.is_available);
+
+        setter(availableData);
       }
     };
+
     fetchCategory("sushi", (data) => {
       const mapped = mapLocalImages(data as Product[]);
       setRolls(mapped);
       setRecommended(mapped.slice(0, 4));
     });
-    fetchCategory("salsas", setSalsas);
-    fetchCategory("bebidas", setBebidas);
+
+    fetchCategory("salsas", (data) => {
+      const mapped = mapLocalImages(data as Product[]);
+      setSalsas(mapped);
+    });
+
+    fetchCategory("bebidas", (data) => {
+      const mapped = mapLocalImages(data as Product[]);
+      setBebidas(mapped);
+    });
+
     setPromos(promosData);
   }, []);
+
 
   const handleAddToCart = async (product: Product) => {
     try {

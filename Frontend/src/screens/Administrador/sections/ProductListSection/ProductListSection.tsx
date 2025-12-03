@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "../../../../components/ui/button";
 import { getJson, postJson, putJson, del } from "../../../../lib/api";
 
@@ -43,9 +43,9 @@ export const ProductListSection = (): JSX.Element => {
     load();
   }, []);
 
-  const openNew = () =>
+  const openNew = () => {
     setEditing({ id: 0, name: "", price: 0, is_available: true });
-
+  };
   // changed code: función para alternar disponibilidad
   const toggleAvailability = async (productId: number, current: boolean) => {
     try {
@@ -184,25 +184,36 @@ function ProductModal({
 
   const save = async () => {
     try {
-      // enviar is_available solo al crear (local.id === 0)
+      if (!local.name.trim()) {
+        return alert("El nombre es obligatorio");
+      }
+      if (local.price <= 0) {
+        return alert("El precio debe ser mayor que 0");
+      }
+
       const body: any = {
         name: local.name,
         price: local.price,
       };
-      if (local.id === 0) body.is_available = local.is_available;
+
+      if (local.id === 0) {
+        body.is_available = local.is_available ?? true;
+      }
 
       const res =
         local.id > 0
           ? await putJson(`/api/admin/products/${local.id}`, body)
           : await postJson(`/api/admin/products`, body);
 
-      if (res.ok) {
-        onSaved(res.data || local);
-        onClose();
-      } else {
-        alert(`Error: ${res.status}`);
+      if (!res.ok) {
+        alert("Error guardando producto");
+        return;
       }
-    } catch {
+
+      const saved = res.data ?? local;
+      onSaved(saved);
+      onClose();
+    } catch (err) {
       alert("Error guardando producto");
     }
   };

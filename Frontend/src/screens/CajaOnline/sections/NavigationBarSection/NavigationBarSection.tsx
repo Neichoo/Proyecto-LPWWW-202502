@@ -1,8 +1,10 @@
 
 import { Button } from "../../../../components/ui/button";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+
 
 export const NavigationBarSection = (): JSX.Element => {
+  const navigate = useNavigate();
   return (
     <nav className="w-full h-[100px] bg-[#ca2b4b] flex items-center justify-between px-20 translate-y-[-1rem] animate-fade-in opacity-0">
       <div className="flex items-center gap-6">
@@ -18,9 +20,24 @@ export const NavigationBarSection = (): JSX.Element => {
         </Link>
       </div>
 
-      <Button className="h-auto bg-[#27686b] hover:bg-[#1f5457] text-[#fefdfe] rounded-[11.73px] shadow-[0px_1.47px_2.93px_#0000000d] px-[35.19px] py-[20.53px] gap-[11.73px] [font-family:'Inter',Helvetica] font-medium text-[23.5px] leading-[35.2px] transition-colors">
-        Logout
-      </Button>
+      <Button
+            className="h-auto px-[35.19px] py-[20.53px] bg-[#27686b] hover:bg-[#1f5457] rounded-[11.73px] shadow-[0px_1.47px_2.93px_#0000000d] transition-colors"
+            onClick={() => {
+              try {
+                localStorage.removeItem("token");
+                localStorage.removeItem("user");
+              } catch {}
+              try {
+                sessionStorage.removeItem("token");
+                sessionStorage.removeItem("user");
+              } catch {}
+              navigate("/");
+            }}
+          >
+            <span className="[font-family:'Inter',Helvetica] font-medium text-[#fefdfe] text-[23.5px] tracking-[0] leading-[35.2px] whitespace-nowrap">
+              Logout
+            </span>
+          </Button>
     </nav>
   );
 };

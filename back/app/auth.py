@@ -10,6 +10,7 @@ from sqlalchemy.orm import Session
 import crud
 import models
 from database import SessionLocal
+from typing import Iterable
 
 SECRET_KEY = os.getenv("SECRET_KEY", "change-me-secret")
 ALGORITHM = "HS256"

@@ -15,15 +15,10 @@ def get_db():
     finally:
         db.close()
 
-
-def require_admin(user: models.User = Depends(auth_module.get_current_user)):
-    if getattr(user, "role", "cliente") != "admin":
-        raise HTTPException(status_code=403, detail="Admin privileges required")
-    return user
-
+require_admin = auth_module.require_admin
 
 @router.get("/users", response_model=list[schemas.UserOut])
-def list_users(role: str | None = None, search: str | None = None, page: int = Query(1, ge=1), db: Session = Depends(get_db), admin: models.User = Depends(require_admin)):
+def list_users(role: str | None = None, search: str | None = None, page: int = Query(1, ge=1), db: Session = Depends(get_db), user_obj: models.User = Depends(auth_module.require_admin)):
     skip = (page - 1) * 20
     users = crud.list_users(db, role=role, search=search, skip=skip, limit=20)
     return users
@@ -66,20 +61,25 @@ def list_roles(admin: models.User = Depends(require_admin)):
 
 
 @router.get("/orders", response_model=list[dict])
-def admin_list_orders(status: str | None = None, db: Session = Depends(get_db), admin: models.User = Depends(require_admin)):
+def admin_list_orders(status: str | None = None, db: Session = Depends(get_db), user: models.User = Depends(auth_module.get_current_user)):
+    if user.role not in ("admin", "cajero", "delivery"):
+        raise HTTPException(status_code=403, detail="Forbidden")
     orders = crud.list_all_orders(db, status=status)
     return [{"id": o.id, "status": o.status, "order_details_url": f"/api/admin/orders/{o.id}"} for o in orders]
 
 
-
 @router.get('/orders/pending', response_model=list[dict])
-def admin_list_pending(db: Session = Depends(get_db), admin: models.User = Depends(require_admin)):
+def admin_list_pending(db: Session = Depends(get_db), user: models.User = Depends(auth_module.get_current_user)):
+    if user.role not in ("admin", "cajero", "delivery"):
+        raise HTTPException(status_code=403, detail="Forbidden")
     orders = crud.list_all_orders(db, status='pending_payment')
     return [{"id": o.id, "status": o.status, "order_details_url": f"/api/admin/orders/{o.id}"} for o in orders]
 
 
 @router.get("/orders/{order_id}", response_model=dict)
-def admin_order_detail(order_id: int, db: Session = Depends(get_db), admin: models.User = Depends(require_admin)):
+def admin_order_detail(order_id: int, db: Session = Depends(get_db), user: models.User = Depends(auth_module.get_current_user)):
+    if user.role not in ("admin", "cajero", "delivery"):
+        raise HTTPException(status_code=403, detail="Forbidden")
     o, items = crud.get_order_detail(db, order_id)
     if not o:
         raise HTTPException(status_code=404, detail="Order not found")
@@ -87,16 +87,19 @@ def admin_order_detail(order_id: int, db: Session = Depends(get_db), admin: mode
 
 
 @router.put("/orders/{order_id}/status", response_model=dict)
-def admin_update_order_status(order_id: int, payload: dict, db: Session = Depends(get_db), admin: models.User = Depends(require_admin)):
+def admin_update_order_status(order_id: int, payload: dict, db: Session = Depends(get_db), user: models.User = Depends(auth_module.get_current_user)):
+    if user.role not in ("admin", "cajero", "delivery"):
+        raise HTTPException(status_code=403, detail="Forbidden")
     o = db.query(models.Order).filter(models.Order.id == order_id).first()
     if not o:
         raise HTTPException(status_code=404, detail="Order not found")
     o = crud.update_order_status(db, o, payload.get("status"))
     return {"id": o.id, "status": o.status}
 
-
 @router.post("/orders/{order_id}/cancel", response_model=dict)
-def admin_cancel_order(order_id: int, db: Session = Depends(get_db), admin: models.User = Depends(require_admin)):
+def admin_cancel_order(order_id: int, db: Session = Depends(get_db), user: models.User = Depends(auth_module.get_current_user)):
+    if user.role not in ("admin", "cajero", "delivery"):
+        raise HTTPException(status_code=403, detail="Forbidden")
     o = db.query(models.Order).filter(models.Order.id == order_id).first()
     if not o:
         raise HTTPException(status_code=404, detail="Order not found")

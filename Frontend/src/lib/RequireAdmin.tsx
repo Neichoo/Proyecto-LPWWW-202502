@@ -1,5 +1,5 @@
 
-import { Outlet, Navigate } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import useRequireAdmin from "./useRequireAdmin";
 
 export default function RequireAdmin({ redirectTo = "/login" }: { redirectTo?: string }) {

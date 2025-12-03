@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Button } from "../../../../components/ui/button";
-import { getJson, postJson } from "../../../../lib/api";
+import { getJson, del } from "../../../../lib/api";
 
 interface User {
   id: number;
@@ -11,9 +11,7 @@ interface User {
   created_at: string;
 }
 
-interface EditingUser extends User {
-  // allows editing
-}
+interface EditingUser extends User {}
 
 const columns = [
   { id: "username", label: "Usuario", width: "w-[150px]" },
@@ -38,12 +36,14 @@ export const MainContentSection = (): JSX.Element => {
       setLoading(true);
       setError(null);
       const res = await getJson("/api/admin/users");
+
       if (!res.ok) {
         if (res.status === 401 || res.status === 403) {
           throw new Error("No autorizado. Inicia sesión como administrador.");
         }
         throw new Error(`HTTP ${res.status}`);
       }
+
       setUsers(res.data as User[]);
     } catch (err: any) {
       setError(err.message || "Error al obtener usuarios");
@@ -58,13 +58,8 @@ export const MainContentSection = (): JSX.Element => {
     }
   };
 
-  const handleEditClick = (user: User) => {
-    setEditingUser({ ...user });
-  };
-
-  const handleCancelEdit = () => {
-    setEditingUser(null);
-  };
+  const handleEditClick = (user: User) => setEditingUser({ ...user });
+  const handleCancelEdit = () => setEditingUser(null);
 
   const handleSaveEdit = async () => {
     if (!editingUser) return;
@@ -92,6 +87,7 @@ export const MainContentSection = (): JSX.Element => {
       ];
 
       let lastRes: Response | null = null;
+
       for (const url of variants) {
         try {
           const res = await fetch(url, {
@@ -100,20 +96,25 @@ export const MainContentSection = (): JSX.Element => {
             body: JSON.stringify(payload),
           });
           lastRes = res;
+
           if (res.ok) {
             const updated = await res.json().catch(() => editingUser);
             setUsers(users?.map((u) => (u.id === editingUser.id ? { ...u, ...updated } : u)) || null);
             setEditingUser(null);
             return;
           }
+
           if (res.status === 404) continue;
+
           if (res.status === 405) {
             const resPatch = await fetch(url, {
               method: "PATCH",
               headers,
               body: JSON.stringify(payload),
             });
+
             lastRes = resPatch;
+
             if (resPatch.ok) {
               const updated = await resPatch.json().catch(() => editingUser);
               setUsers(users?.map((u) => (u.id === editingUser.id ? { ...u, ...updated } : u)) || null);
@@ -155,14 +156,14 @@ export const MainContentSection = (): JSX.Element => {
 
   return (
     <section className="flex flex-col w-full items-center justify-center gap-4 py-8">
-      {/* HEADER CON TÍTULOS ALINEADOS */}
+      {/* ENCABEZADO */}
       <header className="flex w-full items-center border border-solid border-black">
         <div className="w-full flex justify-center border-b border-solid border-[#e5e5e5]">
           <div className="flex flex-1 max-w-[1375px] items-center gap-2">
             {columns.map((column) => (
               <div
                 key={column.id}
-                className={`${column.width} flex items-center justify-center py-3 font-heading font-[number:var(--heading-font-weight)] text-[length:var(--heading-font-size)] text-center tracking-[var(--heading-letter-spacing)] leading-[var(--heading-line-height)] [font-style:var(--heading-font-style)] text-black font-bold`}
+                className={`${column.width} flex items-center justify-center py-3 font-bold text-black`}
               >
                 {column.label}
               </div>
@@ -171,7 +172,7 @@ export const MainContentSection = (): JSX.Element => {
         </div>
       </header>
 
-      {/* FILAS DE USUARIOS */}
+      {/* FILAS */}
       <div className="flex flex-col w-full items-center gap-[8px] px-0 py-8">
         {(users ?? []).map((user, index) => (
           <div
@@ -180,25 +181,36 @@ export const MainContentSection = (): JSX.Element => {
             style={{ "--animation-delay": `${index * 50}ms` } as React.CSSProperties}
           >
             <div className="flex flex-1 max-w-[1375px] items-center gap-2">
-              <div className="w-[150px] text-[#1e1e1e] whitespace-nowrap font-heading font-[number:var(--heading-font-weight)] text-[length:var(--heading-font-size)] text-center tracking-[var(--heading-letter-spacing)] leading-[var(--heading-line-height)] [font-style:var(--heading-font-style)]">
-                {user.username}
-              </div>
+              <div className="w-[150px] text-center">{user.username}</div>
+              <div className="flex-1 max-w-[737px] text-center">{user.email}</div>
+              <div className="w-[150px] text-center">{user.role}</div>
 
-              <div className="flex-1 max-w-[737px] font-heading font-[number:var(--heading-font-weight)] text-[#1e1e1e] text-[length:var(--heading-font-size)] text-center tracking-[var(--heading-letter-spacing)] leading-[var(--heading-line-height)] whitespace-nowrap [font-style:var(--heading-font-style)]">
-                {user.email}
-              </div>
-
-              <div className="flex items-center justify-center w-[150px] font-heading font-[number:var(--heading-font-weight)] text-[#1e1e1e] text-[length:var(--heading-font-size)] text-center tracking-[var(--heading-letter-spacing)] leading-[var(--heading-line-height)] [font-style:var(--heading-font-style)]">
-                {user.role}
-              </div>
-
-              <div className="w-[272px] flex items-center justify-center">
+              <div className="w-[272px] flex items-center justify-center gap-2">
                 <Button
                   variant="outline"
-                  className="h-auto inline-flex items-center justify-center gap-2 p-3 bg-[#e3e3e3] rounded-lg border border-solid border-[#767676] font-single-line-body-base font-[number:var(--single-line-body-base-font-weight)] text-[#1e1e1e] text-[length:var(--single-line-body-base-font-size)] tracking-[var(--single-line-body-base-letter-spacing)] leading-[var(--single-line-body-base-line-height)] [font-style:var(--single-line-body-base-font-style)] hover:bg-[#d3d3d3] transition-colors"
+                  className="p-3 bg-[#e3e3e3] rounded-lg border hover:bg-[#d3d3d3]"
                   onClick={() => handleEditClick(user)}
                 >
                   Editar
+                </Button>
+
+                <Button
+                  variant="destructive"
+                  onClick={async () => {
+                    if (!confirm(`¿Eliminar usuario ${user.username}?`)) return;
+                    try {
+                      const res = await del(`/api/admin/users/${user.id}`);
+                      if (res.ok) {
+                        setUsers((prev) => prev ? prev.filter((p) => p.id !== user.id) : []);
+                      } else {
+                        setError("No se pudo eliminar el usuario");
+                      }
+                    } catch {
+                      setError("Error al eliminar usuario");
+                    }
+                  }}
+                >
+                  Eliminar
                 </Button>
               </div>
             </div>
@@ -206,17 +218,7 @@ export const MainContentSection = (): JSX.Element => {
         ))}
       </div>
 
-      <Button
-        variant="outline"
-        className="h-auto flex items-center justify-center w-[93px] rounded-lg border border-solid border-[#cac4d0] hover:bg-accent transition-colors translate-y-[-1rem] animate-fade-in opacity-0 [--animation-delay:1000ms]"
-      >
-        <div className="inline-flex h-8 items-center justify-center gap-2 px-4 py-1.5">
-          <span className="font-[number:var(--m3-label-large-font-weight)] tracking-[var(--m3-label-large-letter-spacing)] leading-[var(--m3-label-large-line-height)] font-m3-label-large [font-style:var(--m3-label-large-font-style)] text-[length:var(--m3-label-large-font-size)] text-m3syslighton-surface">
-            +
-          </span>
-        </div>
-      </Button>
-
+      {/* MODAL DE EDICIÓN */}
       {editingUser && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white rounded-lg p-8 w-full max-w-md shadow-lg">
@@ -228,10 +230,8 @@ export const MainContentSection = (): JSX.Element => {
                 <input
                   type="text"
                   value={editingUser.username}
-                  onChange={(e) =>
-                    handleEditChange("username", e.target.value)
-                  }
-                  className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-blue-500"
+                  onChange={(e) => handleEditChange("username", e.target.value)}
+                  className="w-full border border-gray-300 rounded px-3 py-2"
                 />
               </div>
 
@@ -241,7 +241,7 @@ export const MainContentSection = (): JSX.Element => {
                   type="email"
                   value={editingUser.email}
                   onChange={(e) => handleEditChange("email", e.target.value)}
-                  className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-blue-500"
+                  className="w-full border border-gray-300 rounded px-3 py-2"
                 />
               </div>
 
@@ -252,10 +252,8 @@ export const MainContentSection = (): JSX.Element => {
                 <input
                   type="text"
                   value={editingUser.full_name}
-                  onChange={(e) =>
-                    handleEditChange("full_name", e.target.value)
-                  }
-                  className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-blue-500"
+                  onChange={(e) => handleEditChange("full_name", e.target.value)}
+                  className="w-full border border-gray-300 rounded px-3 py-2"
                 />
               </div>
 
@@ -264,28 +262,30 @@ export const MainContentSection = (): JSX.Element => {
                 <select
                   value={editingUser.role}
                   onChange={(e) => handleEditChange("role", e.target.value)}
-                  className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-blue-500"
+                  className="w-full border border-gray-300 rounded px-3 py-2"
                 >
                   <option value="admin">admin</option>
-                  <option value="cliente">cliente</option>
+                  <option value="user">user</option>
                   <option value="delivery">delivery</option>
                   <option value="cajero">cajero</option>
                 </select>
               </div>
             </div>
 
-            <div className="flex gap-3 mt-6">
+            {/* BOTONES */}
+            <div className="flex justify-end gap-4 mt-6">
               <Button
-                onClick={handleCancelEdit}
                 variant="outline"
-                className="flex-1"
+                onClick={handleCancelEdit}
+                className="px-4 py-2"
               >
                 Cancelar
               </Button>
+
               <Button
                 onClick={handleSaveEdit}
                 disabled={isSaving}
-                className="flex-1 bg-blue-600 hover:bg-blue-700 text-white"
+                className="px-4 py-2"
               >
                 {isSaving ? "Guardando..." : "Guardar"}
               </Button>

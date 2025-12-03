@@ -8,17 +8,16 @@ import { getJson, postJson, putJson, del } from "../../lib/api";
 type CartItem = {
   id: number;
   product_id: number;
-  name: string;
   price: number;
   quantity: number;
-  subtotal: number;
+  name: string; 
 };
 
 type Cart = {
   id: number;
   user_id: number;
+  subtotal: number;  
   items: CartItem[];
-  subtotal: number;
   shipping: number;
   total: number;
 };
@@ -28,6 +27,19 @@ export const CarritoDeCompras = (): JSX.Element => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [updatingId, setUpdatingId] = useState<number | null>(null);
+
+  // estado para checkout
+  const [showPayment, setShowPayment] = useState(false);
+  const [checkoutLoading, setCheckoutLoading] = useState(false);
+  const [checkoutError, setCheckoutError] = useState<string | null>(null);
+  const [payment, setPayment] = useState({
+    payment_method: "card",
+    card_number: "",
+    card_name: "",
+    expiration_date: "",
+    cvv: "",
+    shipping_address: "",
+  });
 
   const fetchCart = async () => {
     setLoading(true);
@@ -74,6 +86,83 @@ export const CarritoDeCompras = (): JSX.Element => {
       await fetchCart();
     } else {
       setError("No se pudo vaciar el carrito.");
+    }
+  };
+
+  const handleSubmitPayment = async () => {
+    if (!cart || cart.items.length === 0) {
+      setCheckoutError("Carrito vacío.");
+      return;
+    }
+
+    setCheckoutError(null);
+    setCheckoutLoading(true);
+
+    try {
+      const token = localStorage.getItem("token") || sessionStorage.getItem("token");
+      const headersBase: Record<string, string> = { "Content-Type": "application/json" };
+      if (token) headersBase["Authorization"] = `Bearer ${token}`;
+
+      const urls = [
+        "http://localhost:8000/api/cart/checkout",
+      ];
+
+      let lastErr: any = null;
+
+      for (const url of urls) {
+        try {
+          console.info("Intentando checkout POST en:", url, { headers: headersBase });
+          const res = await fetch(url, {
+            method: "POST",
+            headers: headersBase,
+            body: JSON.stringify({}), // <-- enviar cuerpo vacío para evitar 405
+          });
+
+          // leer body y headers para diagnóstico
+          const text = await res.text();
+          let data: any = null;
+          try { data = JSON.parse(text); } catch { data = text; }
+          const allow = res.headers.get("allow") ?? "N/A";
+          console.info("Respuesta checkout:", { url, status: res.status, allow, data });
+
+          if (res.ok) {
+            const orderId = data?.order_id ?? data?.id ?? null;
+            alert(`Orden creada${orderId ? " ID: " + orderId : ""}`);
+            await fetchCart();
+            setShowPayment(false);
+            return;
+          }
+
+          if (res.status === 405) {
+            lastErr = new Error(`405 Method Not Allowed en ${url}. Allow: ${allow}`);
+            continue;
+          }
+
+          if (res.status === 404) {
+            lastErr = new Error(`404 Not Found en ${url}. Revisa que la ruta exista en el backend.`);
+            continue;
+          }
+
+          if (res.status === 401 || res.status === 403) {
+            throw new Error(`${res.status} — No autorizado. Revisa token/roles.`);
+          }
+
+          lastErr = new Error(data?.detail ? JSON.stringify(data.detail) : `HTTP ${res.status} en ${url}`);
+        } catch (err: any) {
+          console.error("Error de network al intentar", url, err);
+          lastErr = err;
+        }
+      }
+
+      throw lastErr || new Error("No se pudo conectar al endpoint de checkout (POST con cuerpo vacío)");
+    } catch (err: any) {
+      console.error("Checkout error final:", err);
+      const msg = err?.message || String(err);
+      if (msg.includes("405")) setCheckoutError(msg + " — revisa el método HTTP en el backend.");
+      else if (msg.includes("404")) setCheckoutError(msg + " — revisa la ruta en el backend.");
+      else setCheckoutError(msg);
+    } finally {
+      setCheckoutLoading(false);
     }
   };
 
@@ -161,9 +250,6 @@ export const CarritoDeCompras = (): JSX.Element => {
                       </Button>
                     </div>
 
-                    <span className="[font-family:'Roboto',Helvetica] font-medium text-[#393939] text-sm text-right w-[80px]">
-                      ${item.subtotal.toLocaleString("es-CL")}
-                    </span>
 
                     <Button
                       variant="ghost"
@@ -203,15 +289,43 @@ export const CarritoDeCompras = (): JSX.Element => {
                 <span>${cart?.total?.toLocaleString("es-CL") || 0}</span>
               </div>
 
-              <Button className="w-full h-[60px] bg-[#ca2b4b] hover:bg-[#b02542] rounded-xl text-[#fdfbfb] [font-family:'Roboto',Helvetica] font-medium text-base transition-colors" disabled={!cart || cart.items.length === 0}>
+              <Button
+                className="w-full h-[60px] bg-[#ca2b4b] hover:bg-[#b02542] rounded-xl text-[#fdfbfb] [font-family:'Roboto',Helvetica] font-medium text-base transition-colors"
+                disabled={!cart || cart.items.length === 0}
+                onClick={() => setShowPayment(true)}
+              >
                 <span className="mr-auto">${cart?.total?.toLocaleString("es-CL") || 0}</span>
                 <span>Ir a pagar</span>
                 <ChevronRightIcon className="w-[25px] h-[25px] ml-2" />
               </Button>
-            </CardContent>
-          </Card>
-        </aside>
-      </div>
-    </div>
-  );
-};
+              {/* Modal de pago */}
+              {showPayment && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-4">
+                  <div className="bg-white rounded-lg shadow-lg w-full max-w-md p-6">
+                    <h3 className="text-lg font-semibold mb-4">Pagar pedido</h3>
+                    {checkoutError && <div className="text-red-600 mb-2">{checkoutError}</div>}
+                    <div className="space-y-2">
+                      <input className="w-full p-2 border" placeholder="Nombre en la tarjeta" value={payment.card_name} onChange={(e)=> setPayment({...payment, card_name: e.target.value})} />
+                      <input className="w-full p-2 border" placeholder="Número de tarjeta" value={payment.card_number} onChange={(e)=> setPayment({...payment, card_number: e.target.value})} />
+                      <div className="flex gap-2">
+                        <input className="flex-1 p-2 border" placeholder="MM/AA" value={payment.expiration_date} onChange={(e)=> setPayment({...payment, expiration_date: e.target.value})} />
+                        <input className="w-24 p-2 border" placeholder="CVV" value={payment.cvv} onChange={(e)=> setPayment({...payment, cvv: e.target.value})} />
+                      </div>
+                      <input className="w-full p-2 border" placeholder="Dirección de envío" value={payment.shipping_address} onChange={(e)=> setPayment({...payment, shipping_address: e.target.value})} />
+                    </div>
+                    <div className="flex justify-end gap-2 mt-4">
+                      <button className="px-4 py-2 border rounded" onClick={()=> setShowPayment(false)} disabled={checkoutLoading}>Cancelar</button>
+                      <button className="px-4 py-2 bg-[#ca2b4b] text-white rounded" onClick={handleSubmitPayment} disabled={checkoutLoading}>
+                        {checkoutLoading ? "Procesando..." : "Pagar"}
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              )}
+             </CardContent>
+           </Card>
+         </aside>
+       </div>
+     </div>
+   );
+ };

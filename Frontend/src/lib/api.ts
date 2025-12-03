@@ -21,28 +21,51 @@ export async function getJson(path: string) {
   return { ok: res.ok, status: res.status, data: await parse(res) };
 }
 
-export async function postJson(path: string, body: any, token?: string) {
+export async function postJson(path: string, data: any) {
   const res = await fetch(`${API_BASE}${path}`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      ...(token ? { Authorization: `Bearer ${token}` } : authHeader()),
-    },
-    body: JSON.stringify(body),
-  });
-  return { ok: res.ok, status: res.status, data: await parse(res) };
-}
-
-export async function putJson(path: string, body: any) {
-  const res = await fetch(`${API_BASE}${path}`, {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
       ...authHeader(),
     },
-    body: JSON.stringify(body),
+    body: JSON.stringify(data),
   });
-  return { ok: res.ok, status: res.status, data: await parse(res) };
+
+  let json = null;
+  try {
+    json = await res.json();
+  } catch {}
+
+  return { ok: res.ok, status: res.status, data: json };
+}
+
+export async function putJson(path: string, data: any) {
+  const headers = {
+    "Content-Type": "application/json",
+    ...authHeader(),
+  };
+
+  let res = await fetch(`${API_BASE}${path}`, {
+    method: "PUT",
+    headers,
+    body: JSON.stringify(data),
+  });
+
+  if (res.status === 405) {
+    // Si PUT no está permitido, intenta PATCH
+    res = await fetch(`${API_BASE}${path}`, {
+      method: "PATCH",
+      headers,
+      body: JSON.stringify(data),
+    });
+  }
+
+  let json = null;
+  try {
+    json = await res.json();
+  } catch {}
+
+  return { ok: res.ok, status: res.status, data: json };
 }
 
 export async function del(path: string) {
@@ -57,7 +80,7 @@ export async function postFormUrlEncoded(path: string, params: Record<string, st
   const body = new URLSearchParams(params);
   const res = await fetch(`${API_BASE}${path}`, {
     method: "POST",
-    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    headers: { "Content-Type": "application/x-www-form-urlencoded", ...authHeader() },
     body: body.toString(),
   });
   const json = await res.json();

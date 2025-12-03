@@ -14,12 +14,11 @@
 # Buildear y levantar
 
 1. Levantar la bd
-
     ```
     docker-compose up --build db -d
     ```
-2. Levantar la fastapi
 
+2. Levantar la fastapi
     ```
     docker-compose up --build fastapi -d
     ```
@@ -28,6 +27,16 @@
     ```
     docker-compose up --build
     ```
+
+4. Para levantar el Frontend se deben realizar los siguientes comandos
+    ```
+    cd Frontend
+    npm install
+    npm run dev
+    ```
+
+## Direccion Pagina
+Para entrar a la pagina debe entrar en [localhost:5173](http://localhost:5173)
 
 ## Endpoints
 Para probar los endpoints de fastapi, entrar en [localhost:8000/docs](http://localhost:8000/docs)

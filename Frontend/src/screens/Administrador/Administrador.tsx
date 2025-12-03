@@ -1,5 +1,4 @@
 import useRequireAdmin from "../../lib/useRequireAdmin";
-import { MainContentSection } from "./sections/MainContentSection";
 import { NavigationBarSection } from "./sections/NavigationBarSection";
 import { ProductListSection } from "./sections/ProductListSection";
 

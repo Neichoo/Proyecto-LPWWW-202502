@@ -77,6 +77,7 @@ class CategoryUpdate(BaseModel):
 
 class ProductOut(ProductBase):
     id: int
+    is_available: Optional[bool]
 
     class Config(OrmConfig):
         pass
@@ -196,6 +197,7 @@ class OrderOut(BaseModel):
     total: int
     status: str
     items: List[OrderItemOut]
+    subtotal: int
 
     class Config(OrmConfig):
         pass

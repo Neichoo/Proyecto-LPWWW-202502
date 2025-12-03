@@ -18,6 +18,7 @@ type Props = {
 
 export const SaucesSaleSection = ({ products, onSelect }: Props): JSX.Element => {
   const imgFor = (p: Product) => p.image || p.image_url || "";
+  
 
   return (
     <section id="salsas" className="w-full py-16 px-4">

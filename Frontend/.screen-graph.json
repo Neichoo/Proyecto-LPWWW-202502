@@ -58,12 +58,12 @@
       "dataModelId": "141:1152"
     },
     {
-      "id": "src/screens/AdministradorCompras/Administrador.tsx",
+      "id": "src/screens/AdministradorUsuarios/Administrador.tsx",
       "label": "Administrador",
       "routes": [
         "/administrador"
       ],
-      "dataModelId": "47:966"
+      "dataModelId": "34:871"
     },
     {
       "id": "src/screens/CajaOnline/CajaOnline.tsx",
@@ -148,15 +148,15 @@
       }
     },
     {
-      "id": "src\\screens\\Login\\Login.tsx:167:18-to-src\\screens\\SignUp\\SignUp.tsx",
+      "id": "src\\screens\\Login\\Login.tsx:174:18-to-src\\screens\\SignUp\\SignUp.tsx",
       "source": "src\\screens\\Login\\Login.tsx",
       "target": "src\\screens\\SignUp\\SignUp.tsx",
       "data": {
         "viaRoute": "/signup",
         "trigger": {
           "element": "<Link to=\"/signup\">\r\n                    <Button variant=\"link\" className=\"h-auto p-0 [font-family:'Roboto',Helvetica] font-medium text-[#111111] text-[16px] leading-normal underline\">\r\n                      Sign up\r\n                    </Button>\r\n                  </Link>",
-          "line": 167,
-          "endLine": 171,
+          "line": 174,
+          "endLine": 178,
           "column": 18,
           "endColumn": 25,
           "sourceFile": "src\\screens\\Login\\Login.tsx"
@@ -292,15 +292,15 @@
       }
     },
     {
-      "id": "src\\screens\\SignUp\\sections\\SignUpSection\\SignUpSection.tsx:179:14-to-src\\screens\\Login\\Login.tsx",
+      "id": "src\\screens\\SignUp\\sections\\SignUpSection\\SignUpSection.tsx:160:14-to-src\\screens\\Login\\Login.tsx",
       "source": "src\\screens\\SignUp\\SignUp.tsx",
       "target": "src\\screens\\Login\\Login.tsx",
       "data": {
         "viaRoute": "/login",
         "trigger": {
           "element": "<Link to=\"/login\" className=\"text-[#111111] underline transition-opacity hover:opacity-80\">\r\n                Log in\r\n              </Link>",
-          "line": 179,
-          "endLine": 181,
+          "line": 160,
+          "endLine": 162,
           "column": 14,
           "endColumn": 21,
           "sourceFile": "src\\screens\\SignUp\\sections\\SignUpSection\\SignUpSection.tsx"
@@ -468,34 +468,34 @@
       }
     },
     {
-      "id": "src\\screens\\AdministradorCompras\\sections\\NavigationBarSection\\NavigationBarSection.tsx:17:10-to-src\\screens\\Admin\\Admin.tsx",
-      "source": "src\\screens\\AdministradorCompras\\Administrador.tsx",
+      "id": "src\\screens\\AdministradorUsuarios\\sections\\NavigationBarSection\\NavigationBarSection.tsx:16:10-to-src\\screens\\Admin\\Admin.tsx",
+      "source": "src\\screens\\AdministradorUsuarios\\Administrador.tsx",
       "target": "src\\screens\\Admin\\Admin.tsx",
       "data": {
         "viaRoute": "/admin",
         "trigger": {
           "element": "<Link to=\"/admin\" className=\"flex items-center gap-3\">\r\n            <img\r\n              className=\"w-[135px] h-[100px] rounded-[50.59px] object-cover\"\r\n              alt=\"Icono\"\r\n              src=\"https://c.animaapp.com/mi7trcsqAboA6X/img/icono-1.png\"\r\n            />\r\n            <h1 className=\"[font-family:'Roboto',Helvetica] font-medium text-[#fefdfe] text-[32px] tracking-[0] leading-[48px] whitespace-nowrap\">\r\n              Fukusuke\r\n            </h1>\r\n          </Link>",
-          "line": 17,
-          "endLine": 26,
+          "line": 16,
+          "endLine": 25,
           "column": 10,
           "endColumn": 17,
-          "sourceFile": "src\\screens\\AdministradorCompras\\sections\\NavigationBarSection\\NavigationBarSection.tsx"
+          "sourceFile": "src\\screens\\AdministradorUsuarios\\sections\\NavigationBarSection\\NavigationBarSection.tsx"
         }
       }
     },
     {
-      "id": "src\\screens\\AdministradorCompras\\sections\\NavigationBarSection\\NavigationBarSection.tsx:46:14-to-src\\screens\\LandingPage\\LandingPage.tsx",
-      "source": "src\\screens\\AdministradorCompras\\Administrador.tsx",
+      "id": "src\\screens\\AdministradorUsuarios\\sections\\NavigationBarSection\\NavigationBarSection.tsx:45:14-to-src\\screens\\LandingPage\\LandingPage.tsx",
+      "source": "src\\screens\\AdministradorUsuarios\\Administrador.tsx",
       "target": "src\\screens\\LandingPage\\LandingPage.tsx",
       "data": {
         "viaRoute": "/",
         "trigger": {
           "element": "navigate(\"/\")",
-          "line": 46,
-          "endLine": 46,
+          "line": 45,
+          "endLine": 45,
           "column": 14,
           "endColumn": 27,
-          "sourceFile": "src\\screens\\AdministradorCompras\\sections\\NavigationBarSection\\NavigationBarSection.tsx"
+          "sourceFile": "src\\screens\\AdministradorUsuarios\\sections\\NavigationBarSection\\NavigationBarSection.tsx"
         }
       }
     },

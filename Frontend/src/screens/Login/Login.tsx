@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { Checkbox } from "../../components/ui/checkbox";
 import { Input } from "../../components/ui/input";
 import { Label } from "../../components/ui/label";
-import { getJson, postFormUrlEncoded } from "../../lib/api";
+import { postFormUrlEncoded } from "../../lib/api";
 import { MainNavbar } from "../../components/navigation/MainNavbar";
 
 export const Login = (): JSX.Element => {

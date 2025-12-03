@@ -238,12 +238,19 @@ def create_order_from_cart(db: Session, user_id: int, payment_info: dict):
     if not cart_info:
         return None
     cart, items, subtotal, shipping, total = cart_info
-    order = models.Order(user_id=user_id, subtotal=subtotal, shipping=shipping, total=total, status="paid", payment_reference="SIMULATED")
+    order = models.Order(user_id=user_id, subtotal=subtotal, shipping=shipping, total=total, status="En espera", payment_reference="SIMULATED")
     db.add(order)
     db.commit()
     db.refresh(order)
     for it in items:
-        oi = models.OrderItem(order_id=order.id, product_id=it.product_id, name=(get_product(db, it.product_id).title if get_product(db, it.product_id) else ""), price=it.price, quantity=it.quantity, subtotal=it.subtotal)
+        oi = models.OrderItem(
+            order_id=order.id, 
+            product_id=it.product_id, 
+            name=(get_product(db, it.product_id).title if get_product(db, it.product_id) else ""), 
+            price=it.price, 
+            quantity=it.quantity, 
+            subtotal=it.subtotal
+        )
         db.add(oi)
     db.commit()
     # clear cart

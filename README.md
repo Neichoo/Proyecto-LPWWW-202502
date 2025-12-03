@@ -40,3 +40,5 @@ Para entrar a la pagina debe entrar en [localhost:5173](http://localhost:5173)
 
 ## Endpoints
 Para probar los endpoints de fastapi, entrar en [localhost:8000/docs](http://localhost:8000/docs)
+
+Link al video final: https://drive.google.com/file/d/1vS33sqVYQLgJ7lXyLM_CKXgBOuNEgKmq/view?usp=sharing
